@@ -361,6 +361,22 @@ button {
   text-transform: uppercase;
 }
 
+.intro-sequence[data-replayable="true"] {
+  cursor: pointer;
+}
+
+.intro-sequence[data-replayable="true"]:hover span,
+.intro-sequence[data-replayable="true"]:focus-visible span {
+  border-color: color-mix(in srgb, var(--path-color) 45%, var(--line));
+  color: var(--text);
+}
+
+.intro-sequence[data-replayable="true"]:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--path-color) 70%, transparent);
+  outline-offset: 4px;
+  border-radius: 999px;
+}
+
 .eyebrow,
 .section-heading,
 .metric-label,
@@ -1725,3 +1741,534 @@ h2 {
     min-height: 340px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Intro sequence overlay
+--------------------------------------------------------------------------- */
+
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background:
+    radial-gradient(circle at 28% 22%, color-mix(in srgb, var(--path-color) 16%, transparent) 0%, transparent 52%),
+    radial-gradient(circle at 78% 78%, color-mix(in srgb, var(--visual) 14%, transparent) 0%, transparent 55%),
+    color-mix(in srgb, var(--bg) 92%, #000 8%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 360ms ease,
+    visibility 360ms ease;
+}
+
+.intro-overlay[hidden] {
+  display: none;
+}
+
+.intro-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.intro-overlay.is-leaving {
+  opacity: 0;
+  transition:
+    opacity 420ms ease,
+    visibility 420ms ease;
+}
+
+.intro-overlay-grid {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, var(--grid-line-x) 1px, transparent 1px),
+    linear-gradient(180deg, var(--grid-line-y) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse at center, #000 35%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 35%, transparent 78%);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.intro-overlay-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 56%, color-mix(in srgb, var(--path-color) 22%, transparent) 0%, transparent 38%);
+  filter: blur(40px);
+  opacity: 0;
+  animation: intro-glow-pulse 5400ms ease-in-out infinite;
+}
+
+@keyframes intro-glow-pulse {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 0.75; }
+}
+
+.intro-skip {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--glass-card);
+  border: 1px solid var(--glass-line);
+  color: var(--text-soft);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 var(--inner-light);
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.intro-skip:hover,
+.intro-skip:focus-visible {
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--path-color) 50%, var(--glass-line));
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.intro-stage {
+  position: relative;
+  width: min(640px, 100%);
+  display: grid;
+  gap: 24px;
+  padding: 36px clamp(24px, 4vw, 44px) 32px;
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, var(--inner-light), transparent 36%),
+    var(--glass-strong);
+  border: 1px solid var(--glass-line);
+  box-shadow:
+    inset 0 1px 0 var(--inner-light),
+    0 30px 90px var(--shadow);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+}
+
+.intro-overlay.is-visible .intro-stage {
+  animation: intro-stage-rise 540ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes intro-stage-rise {
+  from { transform: translateY(18px) scale(0.985); opacity: 0; }
+  to   { transform: translateY(0)    scale(1);     opacity: 1; }
+}
+
+.intro-brand {
+  display: grid;
+  gap: 10px;
+  text-align: center;
+  justify-items: center;
+}
+
+.intro-eyebrow {
+  color: color-mix(in srgb, var(--path-color) 70%, var(--muted));
+}
+
+.intro-headline {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 12px;
+  margin: 0;
+  font-size: clamp(1.8rem, 4.2vw, 2.6rem);
+  font-weight: 720;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  max-width: 100%;
+  color: var(--text);
+}
+
+.intro-headline span {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: intro-word-rise 620ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+.intro-headline span:nth-child(1) { animation-delay: 120ms; }
+.intro-headline span:nth-child(2) { animation-delay: 240ms; }
+.intro-headline span:nth-child(3) {
+  animation-delay: 360ms;
+  color: color-mix(in srgb, var(--path-color) 80%, var(--text));
+}
+
+@keyframes intro-word-rise {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.intro-tagline {
+  color: var(--text-soft);
+  font-size: 0.96rem;
+  line-height: 1.5;
+  opacity: 0;
+  animation: intro-fade-in 600ms ease 520ms forwards;
+}
+
+@keyframes intro-fade-in {
+  to { opacity: 1; }
+}
+
+.intro-scene {
+  position: relative;
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, var(--inner-light), transparent 40%),
+    var(--surface);
+  border: 1px solid var(--line-soft);
+  padding: 14px 18px 10px;
+  box-shadow: inset 0 0 0 1px var(--glass-line);
+  overflow: hidden;
+}
+
+.intro-scene-canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.intro-grid-layer path {
+  fill: none;
+  stroke: var(--grid-line-x);
+  stroke-width: 1;
+}
+
+.intro-origin circle,
+.intro-target circle {
+  fill: color-mix(in srgb, var(--path-color) 22%, var(--surface-soft));
+  stroke: color-mix(in srgb, var(--path-color) 55%, var(--line));
+  stroke-width: 1.5;
+}
+
+.intro-origin circle:last-of-type,
+.intro-target circle:last-of-type {
+  fill: color-mix(in srgb, var(--path-color) 80%, var(--text));
+  stroke: none;
+}
+
+.intro-origin text,
+.intro-target text,
+.intro-clinical-tag text {
+  fill: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-anchor: middle;
+}
+
+.intro-tract-base {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.intro-tract-flow {
+  fill: none;
+  stroke: var(--path-color);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--path-color) 55%, transparent));
+  stroke-dasharray: 480;
+  stroke-dashoffset: 480;
+  transition: stroke-dashoffset 900ms ease, opacity 320ms ease;
+}
+
+.intro-tract-damaged {
+  fill: none;
+  stroke: var(--damage);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-dasharray: 6 7;
+  opacity: 0;
+  transition: opacity 320ms ease 120ms;
+}
+
+.intro-lesion-group {
+  opacity: 0;
+  transform-origin: 280px 110px;
+  transform: scale(0.4);
+  transition:
+    opacity 320ms ease,
+    transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1.4);
+}
+
+.intro-lesion-aura {
+  fill: url(#introLesionGradient);
+}
+
+.intro-lesion-core {
+  fill: var(--lesion);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--lesion) 70%, transparent));
+}
+
+.intro-clinical-tag {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 320ms ease 80ms, transform 320ms ease 80ms;
+}
+
+.intro-clinical-tag path {
+  fill: none;
+  stroke: var(--label-line);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+
+.intro-clinical-tag rect {
+  fill: color-mix(in srgb, var(--cyan) 14%, var(--surface));
+  stroke: color-mix(in srgb, var(--cyan) 55%, var(--line));
+  stroke-width: 1;
+}
+
+.intro-clinical-tag text {
+  fill: var(--text);
+  font-size: 10px;
+}
+
+/* Stage 1: Flow */
+.intro-overlay[data-step="0"] .intro-tract-flow {
+  stroke-dashoffset: 0;
+  animation: intro-flow-shimmer 2400ms linear infinite;
+}
+
+@keyframes intro-flow-shimmer {
+  from { stroke-dasharray: 480; stroke-dashoffset: 0; }
+  to   { stroke-dasharray: 480; stroke-dashoffset: -120; }
+}
+
+/* Stage 2: Interrupt */
+.intro-overlay[data-step="1"] .intro-tract-flow {
+  stroke-dashoffset: 0;
+  stroke: color-mix(in srgb, var(--path-color) 45%, var(--line));
+  filter: none;
+}
+
+.intro-overlay[data-step="1"] .intro-tract-damaged,
+.intro-overlay[data-step="2"] .intro-tract-damaged {
+  opacity: 1;
+}
+
+.intro-overlay[data-step="1"] .intro-lesion-group,
+.intro-overlay[data-step="2"] .intro-lesion-group {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.intro-overlay[data-step="1"] .intro-lesion-aura,
+.intro-overlay[data-step="2"] .intro-lesion-aura {
+  animation: intro-lesion-pulse 2200ms ease-in-out infinite;
+}
+
+@keyframes intro-lesion-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; transform-origin: 280px 110px; }
+  50%      { transform: scale(1.18); opacity: 0.4; transform-origin: 280px 110px; }
+}
+
+/* Stage 3: Localize */
+.intro-overlay[data-step="2"] .intro-tract-flow {
+  stroke: color-mix(in srgb, var(--path-color) 35%, var(--line));
+}
+
+.intro-overlay[data-step="2"] .intro-clinical-tag {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.intro-step {
+  display: grid;
+  gap: 8px;
+  min-height: 96px;
+}
+
+.intro-step-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: color-mix(in srgb, var(--path-color) 70%, var(--muted));
+}
+
+.intro-step-divider {
+  width: 22px;
+  height: 1px;
+  background: color-mix(in srgb, var(--path-color) 55%, var(--line));
+}
+
+.intro-step-title {
+  margin: 0;
+  font-size: 1.32rem;
+  font-weight: 720;
+  color: var(--text);
+}
+
+.intro-step-copy {
+  color: var(--text-soft);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.intro-step.is-swap {
+  animation: intro-step-swap 360ms ease both;
+}
+
+@keyframes intro-step-swap {
+  0%   { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.intro-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.intro-dots {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.intro-dot {
+  width: 26px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--line);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition:
+    background 200ms ease,
+    width 200ms ease;
+}
+
+.intro-dot:hover {
+  background: color-mix(in srgb, var(--path-color) 35%, var(--line));
+}
+
+.intro-dot.is-active {
+  width: 38px;
+  background: var(--path-color);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--path-color) 55%, transparent);
+}
+
+.intro-dot.is-done {
+  background: color-mix(in srgb, var(--path-color) 55%, var(--line));
+}
+
+.intro-dot:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--path-color) 70%, transparent);
+  outline-offset: 3px;
+}
+
+.intro-actions {
+  display: inline-flex;
+  gap: 10px;
+}
+
+.intro-secondary,
+.intro-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 720;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.intro-secondary {
+  background: transparent;
+  border: 1px solid var(--glass-line);
+  color: var(--text-soft);
+}
+
+.intro-secondary:hover:not(:disabled),
+.intro-secondary:focus-visible {
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--path-color) 45%, var(--glass-line));
+  outline: none;
+}
+
+.intro-secondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.intro-primary {
+  background: var(--path-color);
+  border: 1px solid color-mix(in srgb, var(--path-color) 75%, #000);
+  color: #0b0f10;
+  box-shadow:
+    0 12px 28px color-mix(in srgb, var(--path-color) 35%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+
+.intro-primary:hover,
+.intro-primary:focus-visible {
+  transform: translateY(-1px);
+  outline: none;
+  box-shadow:
+    0 18px 36px color-mix(in srgb, var(--path-color) 45%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 560px) {
+  .intro-overlay { padding: 18px; }
+  .intro-stage { padding: 28px 20px 24px; gap: 18px; }
+  .intro-controls { flex-direction: column; align-items: stretch; gap: 14px; }
+  .intro-actions { justify-content: space-between; }
+  .intro-skip { top: 14px; right: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-overlay,
+  .intro-overlay-glow,
+  .intro-stage,
+  .intro-headline span,
+  .intro-tagline,
+  .intro-tract-flow,
+  .intro-lesion-aura,
+  .intro-step.is-swap {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .intro-headline span,
+  .intro-tagline {
+    opacity: 1;
+    transform: none;
+  }
+
+  .intro-tract-flow {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+}
+
