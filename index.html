@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neuro Pathway & Lesion Simulator</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="ambient-background" aria-hidden="true">
+      <span class="ambient-plane plane-one"></span>
+      <span class="ambient-plane plane-two"></span>
+      <span class="ambient-plane plane-three"></span>
+    </div>
+    <main class="app-shell" id="appShell" data-left-collapsed="false" data-right-collapsed="false">
+      <aside class="panel panel-left" aria-label="Pathway selection">
+        <button
+          class="panel-collapse panel-collapse-left"
+          id="leftPanelToggle"
+          type="button"
+          aria-label="Collapse left panel"
+          aria-controls="leftPanelContent"
+          aria-expanded="true"
+        >
+          <span aria-hidden="true"></span>
+        </button>
+        <div class="panel-content" id="leftPanelContent">
+        <div class="intro-block">
+          <div class="intro-heading">
+            <p class="eyebrow">Neuro Localization Lab</p>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to day mode" aria-pressed="false">
+              <span class="theme-track" aria-hidden="true">
+                <span class="theme-thumb"></span>
+              </span>
+              <span id="themeText">Night</span>
+            </button>
+          </div>
+          <h1>Pathway & Lesion Simulator</h1>
+          <p class="intro-copy">
+            Trace tract flow, interrupt it with a lesion, and connect the visual break to the clinical pattern.
+          </p>
+          <div class="intro-sequence" aria-label="Simulation reasoning sequence">
+            <span>Flow</span>
+            <span>Interrupt</span>
+            <span>Localize</span>
+          </div>
+        </div>
+
+        <section class="control-group classifier-group collapsible-section" id="classificationSection" data-collapsible-section data-section-label="Classification">
+          <div class="section-heading">
+            <span>Classification</span>
+            <span class="section-heading-actions">
+              <span id="classifierCount">00</span>
+              <button class="section-toggle" type="button" aria-label="Collapse Classification" aria-controls="classificationSection" aria-expanded="true">
+                <span aria-hidden="true"></span>
+              </button>
+            </span>
+          </div>
+          <div class="classifier-tabs" id="classifierTabs" role="tablist" aria-label="Lesion classification systems"></div>
+          <div class="classifier-list" id="classifierList"></div>
+        </section>
+
+        <section class="control-group collapsible-section" id="pathwaySection" data-collapsible-section data-section-label="Pathway">
+          <div class="section-heading">
+            <span>Pathway</span>
+            <span class="section-heading-actions">
+              <span id="pathwayCount">04</span>
+              <button class="section-toggle" type="button" aria-label="Collapse Pathway" aria-controls="pathwaySection" aria-expanded="true">
+                <span aria-hidden="true"></span>
+              </button>
+            </span>
+          </div>
+          <div class="pathway-list" id="pathwayList"></div>
+        </section>
+
+        <section class="control-group collapsible-section" id="lesionSiteSection" data-collapsible-section data-section-label="Lesion Site">
+          <div class="section-heading">
+            <span>Lesion Site</span>
+            <span class="section-heading-actions">
+              <span id="lesionCount">00</span>
+              <button class="section-toggle" type="button" aria-label="Collapse Lesion Site" aria-controls="lesionSiteSection" aria-expanded="true">
+                <span aria-hidden="true"></span>
+              </button>
+            </span>
+          </div>
+          <div class="lesion-list" id="lesionList"></div>
+        </section>
+
+        <section class="status-strip collapsible-section" id="currentStateSection" aria-label="Current simulation state" data-collapsible-section data-section-label="Current State">
+          <div class="section-heading">
+            <span>Current State</span>
+            <button class="section-toggle" type="button" aria-label="Collapse Current State" aria-controls="currentStateSection" aria-expanded="true">
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
+          <div>
+            <span class="status-label">Signal</span>
+            <strong id="signalState">Interrupted</strong>
+          </div>
+          <div>
+            <span class="status-label">Laterality</span>
+            <strong id="lateralityState">Contralateral</strong>
+          </div>
+          <div>
+            <span class="status-label">Complexity</span>
+            <strong id="complexityState">Foundational</strong>
+          </div>
+        </section>
+        </div>
+      </aside>
+
+      <section class="workspace" aria-label="Neural pathway visualization">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Localization Cockpit</p>
+            <h2 id="activeTitle">Corticospinal Tract</h2>
+          </div>
+          <div class="legend" aria-label="Visualization legend">
+            <span><i class="legend-dot active-dot"></i>Active flow</span>
+            <span><i class="legend-dot lesion-dot"></i>Lesion</span>
+            <span><i class="legend-dot damaged-dot"></i>Downstream affected</span>
+          </div>
+        </header>
+
+        <div class="canvas-shell">
+          <svg
+            id="neuroCanvas"
+            class="neuro-canvas"
+            viewBox="120 35 760 670"
+            role="img"
+            aria-labelledby="canvasTitle canvasDesc"
+          >
+            <title id="canvasTitle">Neural pathway schematic</title>
+            <desc id="canvasDesc">
+              Schematic neuroanatomy showing pathway origin, tract course, decussation, lesion site, and affected downstream segments.
+            </desc>
+            <defs>
+              <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <marker id="flowArrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 8 4 L 0 8 z" />
+              </marker>
+              <clipPath id="brainAtlasClip">
+                <path d="M286 134 C298 82 355 54 416 64 C447 36 508 38 539 72 C592 73 639 112 645 165 C684 185 694 245 661 285 C659 342 608 378 553 365 C521 403 456 408 421 373 C369 386 319 358 304 310 C256 287 245 222 278 184 C274 166 277 148 286 134 Z" />
+              </clipPath>
+            </defs>
+
+            <g class="grid-layer" aria-hidden="true">
+              <path d="M90 92 H910 M90 184 H910 M90 276 H910 M90 368 H910 M90 460 H910 M90 552 H910 M90 644 H910" />
+              <path d="M134 78 V660 M250 78 V660 M366 78 V660 M482 78 V660 M598 78 V660 M714 78 V660 M830 78 V660" />
+            </g>
+
+            <g class="anatomy-layer" aria-hidden="true">
+              <g class="brain-atlas">
+                <path class="brain-outline" d="M286 134 C298 82 355 54 416 64 C447 36 508 38 539 72 C592 73 639 112 645 165 C684 185 694 245 661 285 C659 342 608 378 553 365 C521 403 456 408 421 373 C369 386 319 358 304 310 C256 287 245 222 278 184 C274 166 277 148 286 134 Z" />
+                <g class="ba-map" clip-path="url(#brainAtlasClip)">
+                  <path class="ba-plate ba-frontal" d="M274 184 C278 112 342 72 438 70 C420 112 418 168 442 222 C394 244 334 244 284 220 C278 208 274 196 274 184 Z" />
+                  <path class="ba-plate ba-premotor" d="M430 70 C474 42 530 48 558 88 C526 126 516 178 532 230 C500 238 470 234 442 222 C418 168 420 112 430 70 Z" />
+                  <path class="ba-plate ba-motor" d="M552 84 C594 88 636 120 646 166 C606 172 578 200 562 238 C548 238 538 234 532 230 C516 178 526 126 552 84 Z" />
+                  <path class="ba-plate ba-sensory" d="M646 166 C682 188 692 244 662 284 C616 278 582 258 562 238 C578 200 606 172 646 166 Z" />
+                  <path class="ba-plate ba-temporal" d="M304 310 C286 286 278 250 284 220 C334 244 394 244 442 222 C474 250 488 298 474 352 C448 382 388 386 348 352 C328 344 312 330 304 310 Z" />
+                  <path class="ba-plate ba-parietal" d="M442 222 C482 230 526 232 562 238 C582 258 616 278 662 284 C656 328 610 372 553 365 C526 398 466 408 430 382 C458 330 470 270 442 222 Z" />
+                  <path class="ba-plate ba-occipital" d="M592 228 C628 218 660 238 674 276 C660 326 612 366 552 366 C548 318 562 266 592 228 Z" />
+                </g>
+                <path class="brain-sulcus central-sulcus" d="M552 86 C524 132 520 176 540 230 C552 258 552 302 532 346" />
+                <path class="brain-sulcus" d="M336 142 C382 112 432 118 458 158 M352 244 C396 224 438 238 460 276 M500 272 C544 250 590 260 612 296 M436 118 C472 136 484 176 468 214" />
+              </g>
+
+              <g class="cerebellum-module">
+                <path class="cerebellum-outline" d="M548 392 C582 364 638 374 666 410 C694 448 676 494 632 518 C590 542 540 520 528 478 C518 442 526 412 548 392 Z" />
+                <path class="cerebellum-folia" d="M552 414 C586 396 626 402 650 430 M542 452 C584 430 638 438 662 468 M550 488 C586 470 622 472 644 494" />
+                <path class="cerebellum-vermis" d="M588 394 C574 430 576 478 594 518" />
+              </g>
+
+              <g class="brainstem-stack">
+                <path class="brainstem" d="M482 356 C476 408 484 454 510 494 C534 530 532 580 506 620 C486 586 474 540 472 494 C468 440 468 394 482 356 Z" />
+                <path class="brainstem-core" d="M500 370 C492 412 494 452 508 486 C520 516 520 560 506 596" />
+                <path class="brainstem-band" d="M476 434 C492 424 514 424 530 436" />
+                <path class="brainstem-band" d="M472 492 C492 480 516 480 534 494" />
+              </g>
+
+              <g class="spinal-cord-atlas">
+                <path class="cord-outline" d="M474 494 C456 556 458 624 492 680 C529 624 529 557 511 496" />
+                <path class="cord-dorsal" d="M492 506 C486 550 486 606 494 662" />
+                <path class="cord-lateral cord-left" d="M474 524 C462 574 466 628 492 680" />
+                <path class="cord-lateral cord-right" d="M512 524 C526 574 522 628 494 680" />
+                <path class="cord-segment" d="M464 548 C482 536 506 536 524 550 M462 592 C482 580 508 580 526 594 M470 636 C486 626 506 626 518 638" />
+              </g>
+
+              <g class="eye-module eye-module-left">
+                <path class="eye-globe" d="M236 238 C206 219 174 219 144 238 C173 258 205 258 236 238 Z" />
+                <circle class="iris" cx="190" cy="238" r="15" />
+                <circle class="pupil" cx="190" cy="238" r="7" />
+                <path class="optic-anchor" d="M236 238 C278 242 324 248 370 254" />
+              </g>
+              <g class="eye-module eye-module-right">
+                <path class="eye-globe" d="M764 238 C794 219 826 219 856 238 C827 258 795 258 764 238 Z" />
+                <circle class="iris" cx="810" cy="238" r="15" />
+                <circle class="pupil" cx="810" cy="238" r="7" />
+                <path class="optic-anchor" d="M764 238 C722 242 676 248 630 254" />
+              </g>
+
+              <g class="ear-module ear-module-left" transform="translate(186 318)">
+                <path class="ear-shell" d="M26 -48 C-6 -38 -24 -8 -18 24 C-12 54 18 66 40 44 C56 28 54 4 36 -8 C20 -18 6 -6 10 12 C14 32 4 42 -12 40" />
+                <path class="ear-canal" d="M30 -4 C46 6 48 26 34 42" />
+                <path class="cochlea" d="M46 34 C60 32 66 46 56 56 C44 68 24 58 30 44 C34 34 46 36 46 44" />
+              </g>
+              <g class="ear-module ear-module-right" transform="translate(814 318) scale(-1 1)">
+                <path class="ear-shell" d="M26 -48 C-6 -38 -24 -8 -18 24 C-12 54 18 66 40 44 C56 28 54 4 36 -8 C20 -18 6 -6 10 12 C14 32 4 42 -12 40" />
+                <path class="ear-canal" d="M30 -4 C46 6 48 26 34 42" />
+                <path class="cochlea" d="M46 34 C60 32 66 46 56 56 C44 68 24 58 30 44 C34 34 46 36 46 44" />
+              </g>
+
+              <path class="midline" d="M500 58 V686" />
+            </g>
+
+            <g id="mainCoronalLayer"></g>
+            <g id="pathwayLayer"></g>
+            <g id="classificationLayer"></g>
+            <g id="labelLayer"></g>
+          </svg>
+        </div>
+
+        <footer class="canvas-footer">
+          <div>
+            <span class="metric-label">Origin</span>
+            <strong id="originText">Primary motor cortex</strong>
+          </div>
+          <div>
+            <span class="metric-label">Decussation</span>
+            <strong id="decussationText">Pyramidal decussation</strong>
+          </div>
+          <div>
+            <span class="metric-label">Signal Rule</span>
+            <strong id="ruleText">Before medulla: contralateral body weakness</strong>
+          </div>
+          <div>
+            <span class="metric-label">Pattern</span>
+            <strong id="patternText">Single-tract localization</strong>
+          </div>
+        </footer>
+
+        <section class="cross-section-panel" aria-label="Neuroanatomy cross-section viewer">
+          <div class="cross-section-header">
+            <div>
+              <p class="eyebrow">Cross Section</p>
+              <h3 id="crossSectionTitle">Brainstem axial slice</h3>
+              <p id="crossSectionSubtitle">Cranial nerve nuclei, long tracts, and crossed-sign localization.</p>
+            </div>
+            <div class="cross-section-tabs" id="crossSectionTabs" role="tablist" aria-label="Cross-section anatomy levels"></div>
+          </div>
+          <div class="cross-section-body">
+            <svg
+              id="crossSectionCanvas"
+              class="cross-section-canvas"
+              viewBox="80 40 560 300"
+              role="img"
+              aria-labelledby="crossSectionTitle crossSectionSubtitle"
+            ></svg>
+            <div class="cross-section-notes">
+              <span class="metric-label">Localization Rule</span>
+              <strong id="crossSectionRule">Compact deep lesions create dense contralateral deficits.</strong>
+              <ul id="crossSectionStructures"></ul>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <aside class="panel panel-right" aria-label="Clinical consequence panel">
+        <button
+          class="panel-collapse panel-collapse-right"
+          id="rightPanelToggle"
+          type="button"
+          aria-label="Collapse right panel"
+          aria-controls="rightPanelContent"
+          aria-expanded="true"
+        >
+          <span aria-hidden="true"></span>
+        </button>
+        <div class="panel-content" id="rightPanelContent">
+        <section class="clinical-card primary-finding collapsible-section" id="clinicalOutputSection" data-collapsible-section data-section-label="Clinical Output">
+          <div class="section-card-heading">
+            <p class="eyebrow">Clinical Output</p>
+            <button class="section-toggle" type="button" aria-label="Collapse Clinical Output" aria-controls="clinicalOutputSection" aria-expanded="true">
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
+          <h2 id="findingTitle">Left upper motor neuron weakness</h2>
+          <p id="findingSummary">
+            A right internal capsule lesion interrupts corticospinal fibers before pyramidal decussation, producing contralateral weakness.
+          </p>
+        </section>
+
+        <section class="clinical-grid collapsible-section" id="deficitSummarySection" aria-label="Deficit summary" data-collapsible-section data-section-label="Deficit Summary">
+          <div class="section-heading">
+            <span>Deficit Summary</span>
+            <button class="section-toggle" type="button" aria-label="Collapse Deficit Summary" aria-controls="deficitSummarySection" aria-expanded="true">
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
+          <div>
+            <span>Motor</span>
+            <strong id="motorDeficit">Left face, arm, and leg UMN weakness</strong>
+          </div>
+          <div>
+            <span>Sensory</span>
+            <strong id="sensoryDeficit">No primary sensory tract selected</strong>
+          </div>
+          <div>
+            <span>Reflexes</span>
+            <strong id="reflexDeficit">Hyperreflexia below lesion</strong>
+          </div>
+          <div>
+            <span>Laterality</span>
+            <strong id="clinicalLaterality">Contralateral to lesion</strong>
+          </div>
+          <div>
+            <span>Network</span>
+            <strong id="networkDeficit">Compact descending motor pathway</strong>
+          </div>
+          <div>
+            <span>Pitfall</span>
+            <strong id="pitfallText">Do not confuse UMN weakness with peripheral nerve weakness</strong>
+          </div>
+        </section>
+
+        <section class="reasoning-panel collapsible-section" id="reasoningSection" data-collapsible-section data-section-label="Reasoning">
+          <div class="section-heading">
+            <span>Why This Happens</span>
+            <span class="section-heading-actions">
+              <span id="reasoningCode">CST-01</span>
+              <button class="section-toggle" type="button" aria-label="Collapse Reasoning" aria-controls="reasoningSection" aria-expanded="true">
+                <span aria-hidden="true"></span>
+              </button>
+            </span>
+          </div>
+          <ol id="reasoningList" class="reasoning-list"></ol>
+        </section>
+
+        <section class="localization-clue collapsible-section" id="localizationClueSection" data-collapsible-section data-section-label="Localization Clue">
+          <div class="section-card-heading">
+            <span>Localization clue</span>
+            <button class="section-toggle" type="button" aria-label="Collapse Localization Clue" aria-controls="localizationClueSection" aria-expanded="true">
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
+          <p id="localizationClue">Face, arm, and leg together points to a compact supratentorial motor pathway.</p>
+        </section>
+
+        <section class="classification-panel collapsible-section" id="lesionClassificationSection" data-collapsible-section data-section-label="Lesion Classification">
+          <div class="section-heading">
+            <span>Lesion Classification</span>
+            <span class="section-heading-actions">
+              <span id="classificationCode">BA-04</span>
+              <button class="section-toggle" type="button" aria-label="Collapse Lesion Classification" aria-controls="lesionClassificationSection" aria-expanded="true">
+                <span aria-hidden="true"></span>
+              </button>
+            </span>
+          </div>
+          <h3 id="classificationTitle">Brodmann area 4</h3>
+          <p id="classificationSummary">Primary motor cortex classification with contralateral somatotopic weakness.</p>
+          <div class="classification-grid">
+            <div>
+              <span>Region</span>
+              <strong id="classificationRegion">Precentral gyrus</strong>
+            </div>
+            <div>
+              <span>Signature</span>
+              <strong id="classificationSignature">Contralateral UMN weakness</strong>
+            </div>
+            <div>
+              <span>Localization</span>
+              <strong id="classificationLocalization">Somatotopic cortical motor deficit</strong>
+            </div>
+            <div>
+              <span>Pitfall</span>
+              <strong id="classificationPitfall">Do not confuse cortical weakness with LMN weakness.</strong>
+            </div>
+          </div>
+          <ol id="classificationReasoning" class="classification-reasoning"></ol>
+        </section>
+        </div>
+      </aside>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
