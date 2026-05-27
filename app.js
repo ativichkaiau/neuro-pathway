@@ -4257,7 +4257,6 @@ function initIntroSequence() {
     overlay.classList.remove("is-visible");
     overlay.classList.add("is-leaving");
     document.removeEventListener("keydown", onKeyDown);
-    try { localStorage.setItem(INTRO_STORAGE_KEY, "1"); } catch (_) {}
     setTimeout(() => {
       overlay.hidden = true;
       overlay.classList.remove("is-leaving");
@@ -4309,9 +4308,9 @@ function initIntroSequence() {
     });
   }
 
-  let seen = false;
-  try { seen = localStorage.getItem(INTRO_STORAGE_KEY) === "1"; } catch (_) {}
-  if (!seen) open();
+  // Clear any legacy gate from earlier builds and always show the intro.
+  try { localStorage.removeItem(INTRO_STORAGE_KEY); } catch (_) {}
+  open();
 }
 
 initIntroSequence();
