@@ -4152,3 +4152,166 @@ applyPanelCollapse("left", false);
 applyPanelCollapse("right", false);
 setupCollapsibleSections();
 render();
+
+// ---------------------------------------------------------------------------
+// Intro sequence
+// ---------------------------------------------------------------------------
+
+const INTRO_STORAGE_KEY = "npls-intro-seen-v1";
+const INTRO_AUTO_ADVANCE_MS = 4200;
+
+const introSteps = [
+  {
+    label: "Flow",
+    title: "Trace the tract",
+    copy: "Every pathway carries a signal from origin to target. Watch it run before you interrupt anything.",
+  },
+  {
+    label: "Interrupt",
+    title: "Place a lesion",
+    copy: "Drop a lesion at any level. Fibers downstream of the break fall silent — that's where the deficit lives.",
+  },
+  {
+    label: "Localize",
+    title: "Match break to sign",
+    copy: "Read the break against decussation and somatotopy. The clinical pattern names the lesion site.",
+  },
+];
+
+function initIntroSequence() {
+  const overlay = document.getElementById("introOverlay");
+  if (!overlay) return;
+
+  const stepEl = document.getElementById("introStep");
+  const stepIndexEl = document.getElementById("introStepIndex");
+  const stepLabelEl = document.getElementById("introStepLabel");
+  const stepTitleEl = document.getElementById("introStepTitle");
+  const stepCopyEl = document.getElementById("introStepCopy");
+  const dots = Array.from(overlay.querySelectorAll(".intro-dot"));
+  const nextBtn = document.getElementById("introNext");
+  const backBtn = document.getElementById("introBack");
+  const skipBtn = document.getElementById("introSkip");
+  const replayTrigger = document.querySelector(".intro-sequence");
+
+  let current = 0;
+  let autoTimer = null;
+  let lastFocus = null;
+
+  function clearTimer() {
+    if (autoTimer) {
+      clearTimeout(autoTimer);
+      autoTimer = null;
+    }
+  }
+
+  function scheduleAutoAdvance() {
+    clearTimer();
+    if (current >= introSteps.length - 1) return;
+    autoTimer = setTimeout(() => {
+      goTo(current + 1, { auto: true });
+    }, INTRO_AUTO_ADVANCE_MS);
+  }
+
+  function renderStep() {
+    const step = introSteps[current];
+    overlay.dataset.step = String(current);
+    stepIndexEl.textContent = String(current + 1).padStart(2, "0");
+    stepLabelEl.textContent = step.label;
+    stepTitleEl.textContent = step.title;
+    stepCopyEl.textContent = step.copy;
+
+    stepEl.classList.remove("is-swap");
+    void stepEl.offsetWidth;
+    stepEl.classList.add("is-swap");
+
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle("is-active", idx === current);
+      dot.classList.toggle("is-done", idx < current);
+      dot.setAttribute("aria-current", idx === current ? "step" : "false");
+    });
+
+    backBtn.disabled = current === 0;
+    nextBtn.textContent = current === introSteps.length - 1 ? "Begin" : "Next";
+  }
+
+  function goTo(idx, opts = {}) {
+    current = Math.max(0, Math.min(introSteps.length - 1, idx));
+    renderStep();
+    if (!opts.auto) clearTimer();
+    scheduleAutoAdvance();
+  }
+
+  function open() {
+    lastFocus = document.activeElement;
+    overlay.hidden = false;
+    requestAnimationFrame(() => overlay.classList.add("is-visible"));
+    current = 0;
+    renderStep();
+    scheduleAutoAdvance();
+    document.addEventListener("keydown", onKeyDown);
+    setTimeout(() => nextBtn?.focus({ preventScroll: true }), 200);
+  }
+
+  function close() {
+    clearTimer();
+    overlay.classList.remove("is-visible");
+    overlay.classList.add("is-leaving");
+    document.removeEventListener("keydown", onKeyDown);
+    try { localStorage.setItem(INTRO_STORAGE_KEY, "1"); } catch (_) {}
+    setTimeout(() => {
+      overlay.hidden = true;
+      overlay.classList.remove("is-leaving");
+      if (lastFocus && typeof lastFocus.focus === "function") {
+        lastFocus.focus({ preventScroll: true });
+      }
+    }, 420);
+  }
+
+  function onKeyDown(event) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      close();
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      if (current === introSteps.length - 1) close();
+      else goTo(current + 1);
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      goTo(current - 1);
+    } else if (event.key === "Enter" && event.target === overlay) {
+      event.preventDefault();
+      if (current === introSteps.length - 1) close();
+      else goTo(current + 1);
+    }
+  }
+
+  nextBtn.addEventListener("click", () => {
+    if (current === introSteps.length - 1) close();
+    else goTo(current + 1);
+  });
+  backBtn.addEventListener("click", () => goTo(current - 1));
+  skipBtn.addEventListener("click", close);
+  dots.forEach((dot, idx) => {
+    dot.addEventListener("click", () => goTo(idx));
+  });
+
+  if (replayTrigger) {
+    replayTrigger.dataset.replayable = "true";
+    replayTrigger.setAttribute("role", "button");
+    replayTrigger.setAttribute("tabindex", "0");
+    replayTrigger.setAttribute("aria-label", "Replay intro");
+    replayTrigger.addEventListener("click", open);
+    replayTrigger.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        open();
+      }
+    });
+  }
+
+  let seen = false;
+  try { seen = localStorage.getItem(INTRO_STORAGE_KEY) === "1"; } catch (_) {}
+  if (!seen) open();
+}
+
+initIntroSequence();

@@ -12,6 +12,134 @@
       <span class="ambient-plane plane-two"></span>
       <span class="ambient-plane plane-three"></span>
     </div>
+
+    <div
+      class="intro-overlay"
+      id="introOverlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="introHeadline"
+      aria-describedby="introStepCopy"
+      data-stage="brand"
+      data-step="0"
+      hidden
+    >
+      <div class="intro-overlay-grid" aria-hidden="true"></div>
+      <div class="intro-overlay-glow" aria-hidden="true"></div>
+
+      <button class="intro-skip" id="introSkip" type="button">Skip intro</button>
+
+      <div class="intro-stage">
+        <div class="intro-brand">
+          <p class="eyebrow intro-eyebrow">Neuro Localization Lab</p>
+          <h1 class="intro-headline" id="introHeadline">
+            <span>Pathway</span>
+            <span>&amp; Lesion</span>
+            <span>Simulator</span>
+          </h1>
+          <p class="intro-tagline">Trace flow. Interrupt it. Localize the sign.</p>
+        </div>
+
+        <div class="intro-scene" aria-hidden="true">
+          <svg
+            class="intro-scene-canvas"
+            viewBox="0 0 520 220"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <defs>
+              <linearGradient id="introTractGradient" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="var(--path-color)" stop-opacity="0" />
+                <stop offset="20%" stop-color="var(--path-color)" stop-opacity="1" />
+                <stop offset="100%" stop-color="var(--path-color)" stop-opacity="1" />
+              </linearGradient>
+              <radialGradient id="introLesionGradient" cx="0.5" cy="0.5" r="0.5">
+                <stop offset="0%" stop-color="var(--lesion)" stop-opacity="0.95" />
+                <stop offset="60%" stop-color="var(--lesion)" stop-opacity="0.45" />
+                <stop offset="100%" stop-color="var(--lesion)" stop-opacity="0" />
+              </radialGradient>
+              <marker
+                id="introFlowArrow"
+                viewBox="0 0 8 8"
+                refX="6"
+                refY="4"
+                markerWidth="6"
+                markerHeight="6"
+                orient="auto-start-reverse"
+              >
+                <path d="M 0 0 L 8 4 L 0 8 z" fill="var(--path-color)" />
+              </marker>
+            </defs>
+
+            <g class="intro-grid-layer">
+              <path d="M0 60 H520 M0 110 H520 M0 160 H520" />
+              <path d="M80 20 V200 M180 20 V200 M280 20 V200 M380 20 V200 M460 20 V200" />
+            </g>
+
+            <g class="intro-origin">
+              <circle cx="68" cy="110" r="22" />
+              <circle cx="68" cy="110" r="10" />
+              <text x="68" y="160">Origin</text>
+            </g>
+
+            <g class="intro-target">
+              <circle cx="452" cy="110" r="22" />
+              <circle cx="452" cy="110" r="10" />
+              <text x="452" y="160">Target</text>
+            </g>
+
+            <path
+              class="intro-tract-base"
+              d="M86 110 C 160 60, 240 60, 280 110 S 400 160, 434 110"
+            />
+            <path
+              class="intro-tract-flow"
+              d="M86 110 C 160 60, 240 60, 280 110 S 400 160, 434 110"
+              marker-end="url(#introFlowArrow)"
+            />
+            <path
+              class="intro-tract-damaged"
+              d="M280 110 C 320 135, 400 160, 434 110"
+            />
+
+            <g class="intro-lesion-group">
+              <circle class="intro-lesion-aura" cx="280" cy="110" r="34" />
+              <circle class="intro-lesion-core" cx="280" cy="110" r="11" />
+            </g>
+
+            <g class="intro-clinical-tag">
+              <path d="M280 110 L 280 188" />
+              <rect x="226" y="188" width="108" height="22" rx="11" />
+              <text x="280" y="203">Contralateral sign</text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="intro-step" id="introStep">
+          <p class="eyebrow intro-step-eyebrow">
+            <span id="introStepIndex">01</span>
+            <span class="intro-step-divider" aria-hidden="true"></span>
+            <span id="introStepLabel">Flow</span>
+          </p>
+          <h2 class="intro-step-title" id="introStepTitle">Trace the tract</h2>
+          <p class="intro-step-copy" id="introStepCopy">
+            Every pathway carries a signal from origin to target. Watch it run before you interrupt anything.
+          </p>
+        </div>
+
+        <div class="intro-controls">
+          <div class="intro-dots" role="tablist" aria-label="Intro step">
+            <button type="button" class="intro-dot" data-step="0" aria-label="Step 1: Flow"></button>
+            <button type="button" class="intro-dot" data-step="1" aria-label="Step 2: Interrupt"></button>
+            <button type="button" class="intro-dot" data-step="2" aria-label="Step 3: Localize"></button>
+          </div>
+          <div class="intro-actions">
+            <button type="button" class="intro-secondary" id="introBack">Back</button>
+            <button type="button" class="intro-primary" id="introNext">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <main class="app-shell" id="appShell" data-left-collapsed="false" data-right-collapsed="false">
       <aside class="panel panel-left" aria-label="Pathway selection">
         <button
