@@ -4315,3 +4315,100 @@ function initIntroSequence() {
 }
 
 initIntroSequence();
+
+// ---------------------------------------------------------------------------
+// How-to-use overlay
+// ---------------------------------------------------------------------------
+
+function initHelpOverlay() {
+  const overlay = document.getElementById("helpOverlay");
+  const trigger = document.getElementById("topbarHelp");
+  if (!overlay || !trigger) return;
+
+  const closeBtn = document.getElementById("helpClose");
+  const backdrop = document.getElementById("helpBackdrop");
+  const nextBtn = document.getElementById("helpNext");
+  const prevBtn = document.getElementById("helpPrev");
+  const content = document.getElementById("helpContent");
+  const navItems = Array.from(overlay.querySelectorAll(".help-nav-item"));
+  const sections = Array.from(overlay.querySelectorAll(".help-section"));
+
+  let current = 0;
+  let lastFocus = null;
+
+  function go(idx) {
+    current = Math.max(0, Math.min(sections.length - 1, idx));
+    sections.forEach((section, i) => {
+      const active = i === current;
+      section.classList.toggle("is-active", active);
+      section.hidden = !active;
+    });
+    navItems.forEach((item, i) => {
+      const active = i === current;
+      item.classList.toggle("is-active", active);
+      item.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    prevBtn.disabled = current === 0;
+    nextBtn.textContent = current === sections.length - 1 ? "Done" : "Next";
+    if (content) content.scrollTop = 0;
+  }
+
+  function open() {
+    lastFocus = document.activeElement;
+    overlay.hidden = false;
+    requestAnimationFrame(() => overlay.classList.add("is-visible"));
+    go(0);
+    document.addEventListener("keydown", onKeyDown);
+    setTimeout(() => closeBtn?.focus({ preventScroll: true }), 120);
+  }
+
+  function close() {
+    overlay.classList.remove("is-visible");
+    document.removeEventListener("keydown", onKeyDown);
+    setTimeout(() => {
+      overlay.hidden = true;
+      if (lastFocus && typeof lastFocus.focus === "function") {
+        lastFocus.focus({ preventScroll: true });
+      }
+    }, 240);
+  }
+
+  function onKeyDown(event) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      close();
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      if (current === sections.length - 1) close();
+      else go(current + 1);
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      go(current - 1);
+    }
+  }
+
+  trigger.addEventListener("click", open);
+  closeBtn.addEventListener("click", close);
+  backdrop.addEventListener("click", close);
+  nextBtn.addEventListener("click", () => {
+    if (current === sections.length - 1) close();
+    else go(current + 1);
+  });
+  prevBtn.addEventListener("click", () => go(current - 1));
+  navItems.forEach((item, i) => {
+    item.addEventListener("click", () => go(i));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "?" || overlay.classList.contains("is-visible")) return;
+    const tag = (event.target && event.target.tagName) || "";
+    if (tag === "INPUT" || tag === "TEXTAREA") return;
+    if (event.target && event.target.isContentEditable) return;
+    const introOpen = document.getElementById("introOverlay")?.classList.contains("is-visible");
+    if (introOpen) return;
+    event.preventDefault();
+    open();
+  });
+}
+
+initHelpOverlay();
