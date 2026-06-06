@@ -351,7 +351,12 @@ button {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 6px;
+  width: 100%;
   margin-top: 14px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
 }
 
 .intro-sequence span {
@@ -1769,6 +1774,7 @@ h2 {
   z-index: 50;
   display: grid;
   place-items: center;
+  overflow-y: auto;
   padding: 32px;
   background:
     radial-gradient(circle at 28% 22%, color-mix(in srgb, var(--path-color) 16%, transparent) 0%, transparent 52%),
@@ -1862,10 +1868,12 @@ h2 {
 
 .intro-stage {
   position: relative;
-  width: min(640px, 100%);
+  width: min(680px, 100%);
+  max-height: calc(100vh - 56px);
   display: grid;
-  gap: 24px;
-  padding: 36px clamp(24px, 4vw, 44px) 32px;
+  gap: 16px;
+  overflow-y: auto;
+  padding: 28px clamp(22px, 3.5vw, 38px) 26px;
   border-radius: 22px;
   background:
     linear-gradient(180deg, var(--inner-light), transparent 36%),
@@ -1889,7 +1897,7 @@ h2 {
 
 .intro-brand {
   display: grid;
-  gap: 10px;
+  gap: 8px;
   text-align: center;
   justify-items: center;
 }
@@ -1906,7 +1914,7 @@ h2 {
   margin: 0;
   font-size: clamp(1.8rem, 4.2vw, 2.6rem);
   font-weight: 720;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   line-height: 1.05;
   max-width: 100%;
   color: var(--text);
@@ -1931,7 +1939,7 @@ h2 {
 
 .intro-tagline {
   color: var(--text-soft);
-  font-size: 0.96rem;
+  font-size: 0.9rem;
   line-height: 1.5;
   opacity: 0;
   animation: intro-fade-in 600ms ease 520ms forwards;
@@ -1948,15 +1956,48 @@ h2 {
     linear-gradient(180deg, var(--inner-light), transparent 40%),
     var(--surface);
   border: 1px solid var(--line-soft);
-  padding: 14px 18px 10px;
+  padding: 10px 14px 8px;
   box-shadow: inset 0 0 0 1px var(--glass-line);
   overflow: hidden;
 }
 
 .intro-scene-canvas {
   width: 100%;
-  height: auto;
+  height: clamp(148px, 24vh, 188px);
   display: block;
+}
+
+.intro-map {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.intro-map div {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 62px;
+  padding: 10px;
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, var(--inner-light), transparent 72%),
+    var(--glass-card);
+  box-shadow: inset 0 1px 0 var(--glass-line);
+}
+
+.intro-map strong {
+  color: color-mix(in srgb, var(--path-color) 76%, var(--text));
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+}
+
+.intro-map span {
+  color: var(--text-soft);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
 .intro-grid-layer path {
@@ -1980,7 +2021,8 @@ h2 {
 
 .intro-origin text,
 .intro-target text,
-.intro-clinical-tag text {
+.intro-clinical-tag text,
+.intro-classification-tag text {
   fill: var(--muted);
   font-size: 11px;
   font-weight: 700;
@@ -2041,20 +2083,34 @@ h2 {
   transition: opacity 320ms ease 80ms, transform 320ms ease 80ms;
 }
 
-.intro-clinical-tag path {
+.intro-classification-tag {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 320ms ease 120ms, transform 320ms ease 120ms;
+}
+
+.intro-clinical-tag path,
+.intro-classification-tag path {
   fill: none;
   stroke: var(--label-line);
   stroke-width: 1;
   stroke-dasharray: 3 4;
 }
 
-.intro-clinical-tag rect {
+.intro-clinical-tag rect,
+.intro-classification-tag rect {
   fill: color-mix(in srgb, var(--cyan) 14%, var(--surface));
   stroke: color-mix(in srgb, var(--cyan) 55%, var(--line));
   stroke-width: 1;
 }
 
-.intro-clinical-tag text {
+.intro-classification-tag rect {
+  fill: color-mix(in srgb, var(--visual) 16%, var(--surface));
+  stroke: color-mix(in srgb, var(--visual) 58%, var(--line));
+}
+
+.intro-clinical-tag text,
+.intro-classification-tag text {
   fill: var(--text);
   font-size: 10px;
 }
@@ -2078,18 +2134,21 @@ h2 {
 }
 
 .intro-overlay[data-step="1"] .intro-tract-damaged,
-.intro-overlay[data-step="2"] .intro-tract-damaged {
+.intro-overlay[data-step="2"] .intro-tract-damaged,
+.intro-overlay[data-step="3"] .intro-tract-damaged {
   opacity: 1;
 }
 
 .intro-overlay[data-step="1"] .intro-lesion-group,
-.intro-overlay[data-step="2"] .intro-lesion-group {
+.intro-overlay[data-step="2"] .intro-lesion-group,
+.intro-overlay[data-step="3"] .intro-lesion-group {
   opacity: 1;
   transform: scale(1);
 }
 
 .intro-overlay[data-step="1"] .intro-lesion-aura,
-.intro-overlay[data-step="2"] .intro-lesion-aura {
+.intro-overlay[data-step="2"] .intro-lesion-aura,
+.intro-overlay[data-step="3"] .intro-lesion-aura {
   animation: intro-lesion-pulse 2200ms ease-in-out infinite;
 }
 
@@ -2099,11 +2158,14 @@ h2 {
 }
 
 /* Stage 3: Localize */
-.intro-overlay[data-step="2"] .intro-tract-flow {
+.intro-overlay[data-step="2"] .intro-tract-flow,
+.intro-overlay[data-step="3"] .intro-tract-flow {
   stroke: color-mix(in srgb, var(--path-color) 35%, var(--line));
 }
 
-.intro-overlay[data-step="2"] .intro-clinical-tag {
+.intro-overlay[data-step="2"] .intro-clinical-tag,
+.intro-overlay[data-step="3"] .intro-clinical-tag,
+.intro-overlay[data-step="3"] .intro-classification-tag {
   opacity: 1;
   transform: translateY(0);
 }
@@ -2111,7 +2173,7 @@ h2 {
 .intro-step {
   display: grid;
   gap: 8px;
-  min-height: 96px;
+  min-height: 82px;
 }
 
 .intro-step-eyebrow {
@@ -2129,7 +2191,7 @@ h2 {
 
 .intro-step-title {
   margin: 0;
-  font-size: 1.32rem;
+  font-size: 1.2rem;
   font-weight: 720;
   color: var(--text);
 }
@@ -2259,6 +2321,7 @@ h2 {
 @media (max-width: 560px) {
   .intro-overlay { padding: 18px; }
   .intro-stage { padding: 28px 20px 24px; gap: 18px; }
+  .intro-map { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .intro-controls { flex-direction: column; align-items: stretch; gap: 14px; }
   .intro-actions { justify-content: space-between; }
   .intro-skip { top: 14px; right: 14px; }
@@ -2272,6 +2335,7 @@ h2 {
   .intro-tagline,
   .intro-tract-flow,
   .intro-lesion-aura,
+  .intro-classification-tag,
   .intro-step.is-swap {
     animation: none !important;
     transition: none !important;
@@ -2300,7 +2364,8 @@ h2 {
   gap: 16px;
 }
 
-.topbar-help {
+.topbar-help,
+.topbar-intro {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -2323,13 +2388,16 @@ h2 {
 }
 
 .topbar-help:hover,
-.topbar-help:focus-visible {
+.topbar-help:focus-visible,
+.topbar-intro:hover,
+.topbar-intro:focus-visible {
   border-color: color-mix(in srgb, var(--path-color) 60%, var(--line));
   color: var(--text);
   outline: none;
 }
 
-.topbar-help-icon {
+.topbar-help-icon,
+.topbar-intro-icon {
   display: grid;
   place-items: center;
   width: 22px;
@@ -2342,9 +2410,21 @@ h2 {
   letter-spacing: 0;
 }
 
+.topbar-intro {
+  border-color: color-mix(in srgb, var(--path-color) 32%, var(--line-soft));
+  color: var(--text);
+}
+
+.topbar-intro-icon {
+  background: color-mix(in srgb, var(--cyan) 24%, var(--surface));
+}
+
 @media (max-width: 720px) {
-  .topbar-help-text { display: none; }
-  .topbar-help { padding: 3px; }
+  .topbar-help-text,
+  .topbar-intro-text { display: none; }
+
+  .topbar-help,
+  .topbar-intro { padding: 3px; }
 }
 
 /* ---------------------------------------------------------------------------

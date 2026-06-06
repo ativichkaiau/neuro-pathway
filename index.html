@@ -111,7 +111,32 @@
               <rect x="226" y="188" width="108" height="22" rx="11" />
               <text x="280" y="203">Contralateral sign</text>
             </g>
+
+            <g class="intro-classification-tag">
+              <path d="M280 110 L 280 34" />
+              <rect x="216" y="10" width="128" height="24" rx="12" />
+              <text x="280" y="26">Classify level</text>
+            </g>
           </svg>
+        </div>
+
+        <div class="intro-map" aria-label="Simulator workflow">
+          <div>
+            <strong>01</strong>
+            <span>Choose a pathway</span>
+          </div>
+          <div>
+            <strong>02</strong>
+            <span>Compare normal and lesion states</span>
+          </div>
+          <div>
+            <strong>03</strong>
+            <span>Read cross-section evidence</span>
+          </div>
+          <div>
+            <strong>04</strong>
+            <span>Classify the lesion</span>
+          </div>
         </div>
 
         <div class="intro-step" id="introStep">
@@ -128,9 +153,10 @@
 
         <div class="intro-controls">
           <div class="intro-dots" role="tablist" aria-label="Intro step">
-            <button type="button" class="intro-dot" data-step="0" aria-label="Step 1: Flow"></button>
+            <button type="button" class="intro-dot" data-step="0" aria-label="Step 1: Normal"></button>
             <button type="button" class="intro-dot" data-step="1" aria-label="Step 2: Interrupt"></button>
             <button type="button" class="intro-dot" data-step="2" aria-label="Step 3: Localize"></button>
+            <button type="button" class="intro-dot" data-step="3" aria-label="Step 4: Classify"></button>
           </div>
           <div class="intro-actions">
             <button type="button" class="intro-secondary" id="introBack">Back</button>
@@ -167,11 +193,11 @@
           <p class="intro-copy">
             Trace tract flow, interrupt it with a lesion, and connect the visual break to the clinical pattern.
           </p>
-          <div class="intro-sequence" aria-label="Simulation reasoning sequence">
+          <button class="intro-sequence" id="introReplay" type="button" aria-label="Replay intro sequence">
             <span>Flow</span>
             <span>Interrupt</span>
             <span>Localize</span>
-          </div>
+          </button>
         </div>
 
         <section class="control-group classifier-group collapsible-section" id="classificationSection" data-collapsible-section data-section-label="Classification">
@@ -249,6 +275,17 @@
               <span><i class="legend-dot lesion-dot"></i>Lesion</span>
               <span><i class="legend-dot damaged-dot"></i>Downstream affected</span>
             </div>
+            <button
+              class="topbar-intro"
+              id="topbarIntro"
+              type="button"
+              aria-label="Replay intro"
+              aria-haspopup="dialog"
+              aria-controls="introOverlay"
+            >
+              <span class="topbar-intro-icon" aria-hidden="true">i</span>
+              <span class="topbar-intro-text">Intro</span>
+            </button>
             <button
               class="topbar-help"
               id="topbarHelp"
@@ -697,7 +734,7 @@
               <ul class="help-list">
                 <li>Collapse the left or right panel (top-corner arrow) to give the canvas more room.</li>
                 <li>Toggle <strong>Night/Day</strong> in the left panel if the contrast is straining.</li>
-                <li>Click <strong>Flow · Interrupt · Localize</strong> chips at the top of the left panel to replay the intro animation.</li>
+                <li>Click <strong>Intro</strong> in the top bar, or the Flow / Interrupt / Localize chips in the left panel, to replay the intro.</li>
                 <li>The cockpit footer is the fastest summary — read it before diving into the right panel.</li>
               </ul>
             </section>

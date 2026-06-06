@@ -4157,24 +4157,28 @@ render();
 // Intro sequence
 // ---------------------------------------------------------------------------
 
-const INTRO_STORAGE_KEY = "npls-intro-seen-v1";
 const INTRO_AUTO_ADVANCE_MS = 4200;
 
 const introSteps = [
   {
-    label: "Flow",
-    title: "Trace the tract",
-    copy: "Every pathway carries a signal from origin to target. Watch it run before you interrupt anything.",
+    label: "Normal",
+    title: "Start with intact flow",
+    copy: "Begin from the no-lesion state. Follow the signal from origin to target so the normal route is anchored before anything is interrupted.",
   },
   {
     label: "Interrupt",
     title: "Place a lesion",
-    copy: "Drop a lesion at any level. Fibers downstream of the break fall silent — that's where the deficit lives.",
+    copy: "Drop a lesion at any level. Fibers downstream of the break fall silent, and that is where the deficit pattern begins.",
   },
   {
     label: "Localize",
     title: "Match break to sign",
-    copy: "Read the break against decussation and somatotopy. The clinical pattern names the lesion site.",
+    copy: "Read the break against decussation, laterality, and somatotopy. The clinical panel explains why that sign belongs to that level.",
+  },
+  {
+    label: "Classify",
+    title: "Name the lesion group",
+    copy: "Use the classification panels and cross sections to connect the same lesion to Brodmann, brainstem, cord, subcortical, vascular, or peripheral logic.",
   },
 ];
 
@@ -4191,11 +4195,15 @@ function initIntroSequence() {
   const nextBtn = document.getElementById("introNext");
   const backBtn = document.getElementById("introBack");
   const skipBtn = document.getElementById("introSkip");
-  const replayTrigger = document.querySelector(".intro-sequence");
+  const replayTriggers = [
+    document.getElementById("introReplay"),
+    document.getElementById("topbarIntro"),
+  ].filter(Boolean);
 
   let current = 0;
   let autoTimer = null;
   let lastFocus = null;
+  let isOpen = false;
 
   function clearTimer() {
     if (autoTimer) {
@@ -4242,6 +4250,8 @@ function initIntroSequence() {
   }
 
   function open() {
+    if (isOpen) return;
+    isOpen = true;
     lastFocus = document.activeElement;
     overlay.hidden = false;
     requestAnimationFrame(() => overlay.classList.add("is-visible"));
@@ -4253,11 +4263,12 @@ function initIntroSequence() {
   }
 
   function close() {
+    if (!isOpen) return;
+    isOpen = false;
     clearTimer();
     overlay.classList.remove("is-visible");
     overlay.classList.add("is-leaving");
     document.removeEventListener("keydown", onKeyDown);
-    try { localStorage.setItem(INTRO_STORAGE_KEY, "1"); } catch (_) {}
     setTimeout(() => {
       overlay.hidden = true;
       overlay.classList.remove("is-leaving");
@@ -4295,23 +4306,18 @@ function initIntroSequence() {
     dot.addEventListener("click", () => goTo(idx));
   });
 
-  if (replayTrigger) {
-    replayTrigger.dataset.replayable = "true";
-    replayTrigger.setAttribute("role", "button");
-    replayTrigger.setAttribute("tabindex", "0");
-    replayTrigger.setAttribute("aria-label", "Replay intro");
-    replayTrigger.addEventListener("click", open);
-    replayTrigger.addEventListener("keydown", (event) => {
+  replayTriggers.forEach((trigger) => {
+    trigger.dataset.replayable = "true";
+    trigger.addEventListener("click", open);
+    trigger.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         open();
       }
     });
-  }
+  });
 
-  let seen = false;
-  try { seen = localStorage.getItem(INTRO_STORAGE_KEY) === "1"; } catch (_) {}
-  if (!seen) open();
+  open();
 }
 
 initIntroSequence();
