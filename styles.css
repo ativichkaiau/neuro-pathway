@@ -1662,13 +1662,31 @@ h2 {
 }
 
 @media (max-width: 1120px) {
+  /* Below the full 3-column cockpit the right panel wraps to its own row,
+     so the viewport-locked layout no longer fits — restore page scroll. */
+  html,
+  body {
+    height: auto;
+    overflow: visible;
+  }
+
   .app-shell {
     --left-panel-width: 260px;
     grid-template-columns: var(--left-panel-width) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
   }
 
   .app-shell[data-left-collapsed="true"] {
     --left-panel-width: 56px;
+  }
+
+  .panel,
+  .workspace {
+    overflow: visible;
+    height: auto;
   }
 
   .panel-right {
