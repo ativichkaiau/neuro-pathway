@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Neuro Pathway & Lesion Simulator</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260613-mobile2" />
   </head>
   <body>
     <div
@@ -159,19 +159,19 @@
       </div>
     </div>
 
-    <main class="app-shell" id="appShell" data-left-collapsed="false" data-right-collapsed="false">
+    <main class="app-shell" id="appShell" data-left-collapsed="true" data-right-collapsed="true">
       <aside class="panel panel-left" aria-label="Pathway selection">
         <button
           class="panel-collapse panel-collapse-left"
           id="leftPanelToggle"
           type="button"
-          aria-label="Collapse left panel"
+          aria-label="Expand left panel"
           aria-controls="leftPanelContent"
-          aria-expanded="true"
+          aria-expanded="false"
         >
           <span aria-hidden="true"></span>
         </button>
-        <div class="panel-content" id="leftPanelContent">
+        <div class="panel-content" id="leftPanelContent" aria-hidden="true">
         <div class="intro-block">
           <div class="intro-heading">
             <p class="eyebrow">Neuro Localization Lab</p>
@@ -447,13 +447,13 @@
           class="panel-collapse panel-collapse-right"
           id="rightPanelToggle"
           type="button"
-          aria-label="Collapse right panel"
+          aria-label="Expand right panel"
           aria-controls="rightPanelContent"
-          aria-expanded="true"
+          aria-expanded="false"
         >
           <span aria-hidden="true"></span>
         </button>
-        <div class="panel-content" id="rightPanelContent">
+        <div class="panel-content" id="rightPanelContent" aria-hidden="true">
         <section class="clinical-card primary-finding collapsible-section" id="clinicalOutputSection" data-collapsible-section data-section-label="Clinical Output">
           <div class="section-card-heading">
             <p class="eyebrow">Clinical Output</p>
@@ -746,6 +746,6 @@
       </div>
     </div>
 
-    <script src="./app.js"></script>
+    <script src="./app.js?v=20260613-mobile2"></script>
   </body>
 </html>

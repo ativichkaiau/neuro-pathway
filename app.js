@@ -4148,8 +4148,8 @@ function render() {
 }
 
 applyTheme(state.theme);
-applyPanelCollapse("left", false);
-applyPanelCollapse("right", false);
+applyPanelCollapse("left", true);
+applyPanelCollapse("right", true);
 setupCollapsibleSections();
 render();
 
@@ -4301,6 +4301,12 @@ function initIntroSequence() {
     else goTo(current + 1);
   });
   backBtn.addEventListener("click", () => goTo(current - 1));
+  function closeFromPointer(event) {
+    event.preventDefault();
+    close();
+  }
+
+  skipBtn.addEventListener("pointerdown", closeFromPointer);
   skipBtn.addEventListener("click", close);
   dots.forEach((dot, idx) => {
     dot.addEventListener("click", () => goTo(idx));

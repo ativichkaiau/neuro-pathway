@@ -1599,6 +1599,10 @@ h2 {
     --left-panel-width: 56px;
   }
 
+  .app-shell[data-right-collapsed="true"] .panel-right {
+    min-height: 56px;
+  }
+
   .panel,
   .workspace {
     overflow: visible;
@@ -1625,35 +1629,80 @@ h2 {
 
 @media (max-width: 820px) {
   .app-shell {
-    display: block;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
   }
 
   .panel {
-    min-height: 68px;
+    min-height: 56px;
     border-width: 0 0 1px;
-    padding: 18px;
+    padding: 12px 14px;
+  }
+
+  .panel-content {
+    padding-top: 10px;
+  }
+
+  .app-shell[data-left-collapsed="true"] .panel-left,
+  .app-shell[data-right-collapsed="true"] .panel-right {
+    min-height: 52px;
+    padding-block: 10px;
+  }
+
+  .panel-collapse,
+  .panel-collapse-right {
+    position: relative;
+    top: auto;
+    align-self: flex-end;
+    width: 34px;
+    height: 34px;
+  }
+
+  .app-shell[data-left-collapsed="true"] .panel-left .panel-collapse,
+  .app-shell[data-right-collapsed="true"] .panel-right .panel-collapse {
+    align-self: flex-end;
   }
 
   .workspace {
     min-height: auto;
-    padding: 18px;
+    gap: 12px;
+    padding: 14px;
   }
 
   .topbar {
     display: grid;
+    gap: 12px;
+  }
+
+  .topbar-actions {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
   }
 
   .legend {
     justify-content: flex-start;
+    gap: 8px 12px;
   }
 
   .canvas-shell {
-    min-height: 520px;
+    height: min(72vh, 620px);
+    min-height: 420px;
   }
 
   .canvas-footer,
   .clinical-grid {
     grid-template-columns: 1fr;
+  }
+
+  .canvas-footer div {
+    border-right: 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .canvas-footer div:last-child {
+    border-bottom: 0;
   }
 
   .cross-section-header {
@@ -1670,6 +1719,27 @@ h2 {
 }
 
 @media (max-width: 520px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .panel {
+    padding-inline: 12px;
+  }
+
+  .workspace {
+    padding: 12px;
+  }
+
+  .topbar-actions {
+    align-items: flex-start;
+  }
+
+  .topbar-help,
+  .topbar-intro {
+    min-height: 34px;
+  }
+
   .pathway-copy,
   .lesion-copy {
     padding: 10px;
@@ -1680,12 +1750,20 @@ h2 {
     font-size: 1.18rem;
   }
 
-  .legend span {
+  .legend {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 100%;
   }
 
+  .legend span {
+    width: auto;
+    white-space: normal;
+  }
+
   .canvas-shell {
-    min-height: 460px;
+    height: min(68vh, 500px);
+    min-height: 380px;
   }
 
   .cross-section-tabs {
@@ -1693,8 +1771,16 @@ h2 {
   }
 
   .cross-section-canvas {
-    height: 340px;
-    min-height: 340px;
+    height: clamp(260px, 72vw, 340px);
+    min-height: 260px;
+  }
+
+  .cross-section-panel,
+  .clinical-card,
+  .classification-panel,
+  .reasoning-panel,
+  .localization-clue {
+    padding: 12px;
   }
 }
 
@@ -1747,6 +1833,7 @@ h2 {
 
 .intro-skip {
   position: absolute;
+  z-index: 3;
   top: 24px;
   right: 28px;
   display: inline-flex;
@@ -1779,6 +1866,7 @@ h2 {
 
 .intro-stage {
   position: relative;
+  z-index: 2;
   width: min(680px, 100%);
   max-height: calc(100vh - 56px);
   display: grid;
