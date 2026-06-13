@@ -7,9 +7,9 @@
   --surface-soft: #171d20;
   --line: #293137;
   --line-soft: #1d2428;
-  --glass: rgba(16, 20, 22, 0.58);
-  --glass-strong: rgba(13, 17, 19, 0.7);
-  --glass-card: rgba(13, 17, 19, 0.52);
+  --glass: rgba(13, 17, 19, 0.9);
+  --glass-strong: rgba(13, 17, 19, 0.96);
+  --glass-card: rgba(16, 20, 22, 0.82);
   --glass-line: rgba(222, 244, 240, 0.14);
   --grid-line-x: rgba(255, 255, 255, 0.03);
   --grid-line-y: rgba(255, 255, 255, 0.025);
@@ -29,11 +29,8 @@
   --lesion: #ff633f;
   --damage: #b8544d;
   --ok: #91e6bc;
-  --shadow: rgba(0, 0, 0, 0.42);
-  --inner-light: rgba(255, 255, 255, 0.055);
-  --ambient-a: rgba(89, 217, 232, 0.22);
-  --ambient-b: rgba(180, 140, 255, 0.16);
-  --ambient-c: rgba(240, 178, 77, 0.14);
+  --shadow: rgba(0, 0, 0, 0.24);
+  --inner-light: rgba(255, 255, 255, 0.04);
   --path-color: var(--motor);
   --class-color: var(--visual);
 }
@@ -47,9 +44,9 @@
   --surface-soft: #e8f0ee;
   --line: rgba(38, 65, 70, 0.2);
   --line-soft: rgba(38, 65, 70, 0.13);
-  --glass: rgba(248, 252, 251, 0.48);
-  --glass-strong: rgba(255, 255, 255, 0.62);
-  --glass-card: rgba(255, 255, 255, 0.5);
+  --glass: rgba(248, 252, 251, 0.9);
+  --glass-strong: rgba(255, 255, 255, 0.96);
+  --glass-card: rgba(255, 255, 255, 0.82);
   --glass-line: rgba(32, 60, 64, 0.15);
   --grid-line-x: rgba(25, 55, 62, 0.055);
   --grid-line-y: rgba(25, 55, 62, 0.045);
@@ -64,11 +61,8 @@
   --muted: #667b7d;
   --lesion: #de4f36;
   --damage: #ae625c;
-  --shadow: rgba(42, 66, 70, 0.18);
-  --inner-light: rgba(255, 255, 255, 0.36);
-  --ambient-a: rgba(71, 190, 210, 0.34);
-  --ambient-b: rgba(138, 112, 220, 0.24);
-  --ambient-c: rgba(232, 169, 72, 0.2);
+  --shadow: rgba(42, 66, 70, 0.12);
+  --inner-light: rgba(255, 255, 255, 0.28);
 }
 
 * {
@@ -90,68 +84,6 @@ body {
     sans-serif;
 }
 
-.ambient-background {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  background:
-    linear-gradient(115deg, transparent 0 44%, var(--ambient-a) 44% 46%, transparent 46%),
-    linear-gradient(28deg, transparent 0 58%, var(--ambient-b) 58% 60%, transparent 60%),
-    linear-gradient(155deg, transparent 0 70%, var(--ambient-c) 70% 72%, transparent 72%),
-    var(--bg);
-}
-
-.ambient-plane {
-  position: absolute;
-  width: min(58vw, 720px);
-  height: min(32vw, 340px);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  background: linear-gradient(135deg, var(--ambient-a), transparent 68%);
-  clip-path: polygon(7% 0, 100% 16%, 86% 100%, 0 78%);
-  filter: blur(26px);
-  opacity: 0.7;
-  transform: rotate(-8deg);
-  animation: driftPlane 18s ease-in-out infinite alternate;
-}
-
-.plane-one {
-  top: -9%;
-  left: 18%;
-}
-
-.plane-two {
-  right: -10%;
-  bottom: 8%;
-  background: linear-gradient(135deg, var(--ambient-b), transparent 70%);
-  animation-duration: 22s;
-  animation-delay: -7s;
-}
-
-.plane-three {
-  bottom: -11%;
-  left: -8%;
-  background: linear-gradient(135deg, var(--ambient-c), transparent 70%);
-  animation-duration: 26s;
-  animation-delay: -12s;
-}
-
-@keyframes driftPlane {
-  from {
-    transform: translate3d(-18px, -12px, 0) rotate(-8deg);
-  }
-
-  to {
-    transform: translate3d(22px, 18px, 0) rotate(-4deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ambient-plane {
-    animation: none;
-  }
-}
-
 button {
   border: 0;
   font: inherit;
@@ -169,7 +101,8 @@ button {
   overflow: hidden;
   background:
     linear-gradient(90deg, var(--grid-line-x) 1px, transparent 1px),
-    linear-gradient(180deg, var(--grid-line-y) 1px, transparent 1px);
+    linear-gradient(180deg, var(--grid-line-y) 1px, transparent 1px),
+    var(--bg);
   background-size: 72px 72px;
   transition: grid-template-columns 220ms ease;
 }
@@ -190,10 +123,9 @@ button {
   background:
     linear-gradient(180deg, var(--inner-light), transparent 36%),
     var(--glass);
-  backdrop-filter: blur(24px) saturate(135%);
   border-color: var(--line);
   border-style: solid;
-  box-shadow: inset 0 1px 0 var(--glass-line), 0 18px 46px var(--shadow);
+  box-shadow: inset 0 1px 0 var(--glass-line);
   overflow: hidden auto;
   padding: 24px;
   transition: padding 220ms ease;
@@ -234,7 +166,7 @@ button {
     linear-gradient(180deg, var(--inner-light), transparent 72%),
     var(--glass-card);
   color: var(--text);
-  box-shadow: inset 0 1px 0 var(--glass-line), 0 10px 24px var(--shadow);
+  box-shadow: inset 0 1px 0 var(--glass-line);
 }
 
 .panel-collapse-right {
@@ -325,7 +257,7 @@ button {
   height: 14px;
   border-radius: 50%;
   background: var(--text);
-  box-shadow: 0 3px 10px var(--shadow);
+  box-shadow: 0 1px 4px var(--shadow);
   transition: transform 180ms ease;
 }
 
@@ -815,12 +747,12 @@ h2 {
 
 .active-dot {
   background: var(--path-color);
-  box-shadow: 0 0 12px var(--path-color);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--path-color) 50%, transparent);
 }
 
 .lesion-dot {
   background: var(--lesion);
-  box-shadow: 0 0 12px var(--lesion);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--lesion) 50%, transparent);
 }
 
 .damaged-dot {
@@ -836,13 +768,11 @@ h2 {
   background:
     linear-gradient(180deg, var(--canvas-sheen), rgba(255, 255, 255, 0)),
     var(--surface);
-  box-shadow: inset 0 1px 0 var(--inner-light), 0 18px 48px var(--shadow);
-  backdrop-filter: blur(20px) saturate(130%);
+  box-shadow: inset 0 1px 0 var(--inner-light), 0 8px 22px var(--shadow);
   overflow: hidden;
 }
 
-.canvas-shell::before,
-.canvas-shell::after {
+.canvas-shell::before {
   position: absolute;
   z-index: 1;
   pointer-events: none;
@@ -852,15 +782,6 @@ h2 {
 .canvas-shell::before {
   inset: 0;
   border: 1px solid rgba(255, 255, 255, 0.035);
-}
-
-.canvas-shell::after {
-  right: 18px;
-  bottom: 18px;
-  width: 88px;
-  height: 2px;
-  background: color-mix(in srgb, var(--path-color) 58%, transparent);
-  box-shadow: 0 -10px 0 rgba(255, 255, 255, 0.07);
 }
 
 .neuro-canvas {
@@ -887,10 +808,6 @@ h2 {
   fill: color-mix(in srgb, var(--surface) 34%, transparent);
   stroke: var(--anatomy-stroke);
   stroke-width: 2;
-}
-
-.brain-outline {
-  filter: drop-shadow(0 0 18px color-mix(in srgb, var(--class-color) 16%, transparent));
 }
 
 .ba-map {
@@ -979,7 +896,6 @@ h2 {
   fill: color-mix(in srgb, #91e6bc 11%, transparent);
   stroke: color-mix(in srgb, #91e6bc 44%, var(--anatomy-stroke));
   stroke-width: 2;
-  filter: drop-shadow(0 0 14px color-mix(in srgb, #91e6bc 14%, transparent));
 }
 
 .cerebellum-folia {
@@ -1241,7 +1157,7 @@ h2 {
   background:
     linear-gradient(180deg, var(--inner-light), transparent 64%),
     var(--glass-card);
-  box-shadow: inset 0 1px 0 var(--glass-line), 0 16px 38px var(--shadow);
+  box-shadow: inset 0 1px 0 var(--glass-line);
   padding: 14px;
 }
 
@@ -1492,14 +1408,14 @@ h2 {
   background:
     linear-gradient(180deg, var(--inner-light), transparent 64%),
     var(--glass-card);
-  box-shadow: inset 0 1px 0 var(--glass-line), 0 16px 38px var(--shadow);
+  box-shadow: inset 0 1px 0 var(--glass-line);
   padding: 18px;
 }
 
 .primary-finding {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--path-color) 13%, var(--inner-light)), transparent 72%),
-    var(--glass-card);
+  border-left: 3px solid color-mix(in srgb, var(--path-color) 72%, var(--line));
+  background: var(--glass-card);
+  padding-left: 16px;
 }
 
 .primary-finding h2 {
@@ -1794,12 +1710,7 @@ h2 {
   place-items: center;
   overflow-y: auto;
   padding: 32px;
-  background:
-    radial-gradient(circle at 28% 22%, color-mix(in srgb, var(--path-color) 16%, transparent) 0%, transparent 52%),
-    radial-gradient(circle at 78% 78%, color-mix(in srgb, var(--visual) 14%, transparent) 0%, transparent 55%),
-    color-mix(in srgb, var(--bg) 92%, #000 8%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  backdrop-filter: blur(18px) saturate(140%);
+  background: color-mix(in srgb, var(--bg) 94%, #000 6%);
   opacity: 0;
   visibility: hidden;
   transition:
@@ -1830,26 +1741,8 @@ h2 {
     linear-gradient(90deg, var(--grid-line-x) 1px, transparent 1px),
     linear-gradient(180deg, var(--grid-line-y) 1px, transparent 1px);
   background-size: 72px 72px;
-  mask-image: radial-gradient(ellipse at center, #000 35%, transparent 78%);
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 35%, transparent 78%);
-  opacity: 0.7;
+  opacity: 0.55;
   pointer-events: none;
-}
-
-.intro-overlay-glow {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 50% 56%, color-mix(in srgb, var(--path-color) 22%, transparent) 0%, transparent 38%);
-  filter: blur(40px);
-  opacity: 0;
-  animation: intro-glow-pulse 5400ms ease-in-out infinite;
-}
-
-@keyframes intro-glow-pulse {
-  0%, 100% { opacity: 0.35; }
-  50%      { opacity: 0.75; }
 }
 
 .intro-skip {
@@ -1897,11 +1790,7 @@ h2 {
     linear-gradient(180deg, var(--inner-light), transparent 36%),
     var(--glass-strong);
   border: 1px solid var(--glass-line);
-  box-shadow:
-    inset 0 1px 0 var(--inner-light),
-    0 30px 90px var(--shadow);
-  backdrop-filter: blur(28px) saturate(150%);
-  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  box-shadow: inset 0 1px 0 var(--inner-light), 0 12px 34px var(--shadow);
 }
 
 .intro-overlay.is-visible .intro-stage {
@@ -2061,7 +1950,6 @@ h2 {
   stroke: var(--path-color);
   stroke-width: 3.5;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--path-color) 55%, transparent));
   stroke-dasharray: 480;
   stroke-dashoffset: 480;
   transition: stroke-dashoffset 900ms ease, opacity 320ms ease;
@@ -2092,7 +1980,6 @@ h2 {
 
 .intro-lesion-core {
   fill: var(--lesion);
-  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--lesion) 70%, transparent));
 }
 
 .intro-clinical-tag {
@@ -2263,7 +2150,7 @@ h2 {
 .intro-dot.is-active {
   width: 38px;
   background: var(--path-color);
-  box-shadow: 0 0 12px color-mix(in srgb, var(--path-color) 55%, transparent);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--path-color) 40%, transparent);
 }
 
 .intro-dot.is-done {
@@ -2322,18 +2209,14 @@ h2 {
   background: var(--path-color);
   border: 1px solid color-mix(in srgb, var(--path-color) 75%, #000);
   color: #0b0f10;
-  box-shadow:
-    0 12px 28px color-mix(in srgb, var(--path-color) 35%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32);
 }
 
 .intro-primary:hover,
 .intro-primary:focus-visible {
   transform: translateY(-1px);
   outline: none;
-  box-shadow:
-    0 18px 36px color-mix(in srgb, var(--path-color) 45%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 @media (max-width: 560px) {
@@ -2347,7 +2230,6 @@ h2 {
 
 @media (prefers-reduced-motion: reduce) {
   .intro-overlay,
-  .intro-overlay-glow,
   .intro-stage,
   .intro-headline span,
   .intro-tagline,
@@ -2379,7 +2261,9 @@ h2 {
 .topbar-actions {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 16px;
+  min-width: 0;
 }
 
 .topbar-help,
@@ -2387,6 +2271,7 @@ h2 {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  flex: 0 0 auto;
   min-height: 30px;
   padding: 4px 12px 4px 5px;
   cursor: pointer;
@@ -2398,6 +2283,7 @@ h2 {
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  white-space: nowrap;
   box-shadow: inset 0 1px 0 var(--inner-light);
   transition:
     color 160ms ease,
@@ -2426,6 +2312,11 @@ h2 {
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0;
+}
+
+.topbar-help-text,
+.topbar-intro-text {
+  white-space: nowrap;
 }
 
 .topbar-intro {
@@ -2475,12 +2366,7 @@ h2 {
 .help-overlay-backdrop {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 30% 18%, color-mix(in srgb, var(--path-color) 14%, transparent) 0%, transparent 52%),
-    radial-gradient(circle at 78% 82%, color-mix(in srgb, var(--visual) 12%, transparent) 0%, transparent 58%),
-    color-mix(in srgb, var(--bg) 88%, #000 12%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  backdrop-filter: blur(14px) saturate(140%);
+  background: color-mix(in srgb, var(--bg) 90%, #000 10%);
 }
 
 .help-modal {
@@ -2494,11 +2380,7 @@ h2 {
   background:
     linear-gradient(180deg, var(--inner-light), transparent 36%),
     var(--glass-strong);
-  box-shadow:
-    inset 0 1px 0 var(--glass-line),
-    0 32px 72px var(--shadow);
-  -webkit-backdrop-filter: blur(28px) saturate(140%);
-  backdrop-filter: blur(28px) saturate(140%);
+  box-shadow: inset 0 1px 0 var(--glass-line), 0 12px 34px var(--shadow);
   overflow: hidden;
   transform: translateY(6px) scale(0.985);
   transition: transform 260ms ease;
@@ -2838,18 +2720,14 @@ h2 {
   border: 1px solid color-mix(in srgb, var(--path-color) 75%, #000);
   background: var(--path-color);
   color: #0b0f10;
-  box-shadow:
-    0 10px 24px color-mix(in srgb, var(--path-color) 32%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .help-primary:hover,
 .help-primary:focus-visible {
   outline: none;
   transform: translateY(-1px);
-  box-shadow:
-    0 16px 32px color-mix(in srgb, var(--path-color) 42%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.38);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38);
 }
 
 @media (max-width: 720px) {
