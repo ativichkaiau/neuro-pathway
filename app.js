@@ -3245,7 +3245,8 @@ const state = {
   classifierId: classificationSystems[0].id,
   classificationId: classificationSystems[0].items[0].id,
   crossSectionId: crossSections[0].id,
-  theme: getStoredTheme(),
+  themeMode: getStoredThemeMode(),
+  theme: "night",
 };
 
 const els = {
@@ -3253,6 +3254,7 @@ const els = {
   root: document.documentElement,
   themeToggle: document.querySelector("#themeToggle"),
   themeText: document.querySelector("#themeText"),
+  themeIcon: document.querySelector("#themeIcon"),
   leftPanelToggle: document.querySelector("#leftPanelToggle"),
   leftPanelContent: document.querySelector("#leftPanelContent"),
   rightPanelToggle: document.querySelector("#rightPanelToggle"),
@@ -3303,33 +3305,53 @@ const els = {
   classificationReasoning: document.querySelector("#classificationReasoning"),
 };
 
-function getStoredTheme() {
+const THEME_MODES = ["auto", "day", "night"];
+const THEME_LABELS = { auto: "Auto", day: "Day", night: "Night" };
+const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+function getStoredThemeMode() {
   try {
-    return window.localStorage.getItem("neuro-theme") === "day" ? "day" : "night";
+    const stored = window.localStorage.getItem("neuro-theme");
+    return THEME_MODES.includes(stored) ? stored : "auto";
   } catch {
-    return "night";
+    return "auto";
   }
 }
 
-function storeTheme(theme) {
+function storeTheme(mode) {
   try {
-    window.localStorage.setItem("neuro-theme", theme);
+    window.localStorage.setItem("neuro-theme", mode);
   } catch {
     // Local storage can be unavailable in restricted browser contexts.
   }
 }
 
-function applyTheme(theme) {
-  state.theme = theme;
-  els.root.dataset.theme = theme;
-  els.themeToggle.setAttribute("aria-pressed", String(theme === "day"));
-  els.themeToggle.setAttribute("aria-label", `Switch to ${theme === "day" ? "night" : "day"} mode`);
-  setText(els.themeText, theme === "day" ? "Day" : "Night");
-  storeTheme(theme);
+function resolveTheme(mode) {
+  if (mode === "day" || mode === "night") return mode;
+  return darkModeQuery.matches ? "night" : "day";
+}
+
+function applyTheme(mode) {
+  state.themeMode = mode;
+  const resolved = resolveTheme(mode);
+  state.theme = resolved;
+  els.root.dataset.theme = resolved;
+  els.themeToggle.setAttribute("aria-label", `Theme mode: ${THEME_LABELS[mode]}. Click to change.`);
+  els.themeToggle.setAttribute("aria-pressed", String(resolved === "day"));
+  setText(els.themeText, THEME_LABELS[mode]);
+  if (els.themeIcon) {
+    els.themeIcon.textContent = mode === "auto" ? "◐" : resolved === "night" ? "☾" : "☀";
+  }
+  storeTheme(mode);
 }
 
 els.themeToggle.addEventListener("click", () => {
-  applyTheme(state.theme === "day" ? "night" : "day");
+  const next = THEME_MODES[(THEME_MODES.indexOf(state.themeMode) + 1) % THEME_MODES.length];
+  applyTheme(next);
+});
+
+darkModeQuery.addEventListener("change", () => {
+  if (state.themeMode === "auto") applyTheme("auto");
 });
 
 function applyPanelCollapse(side, collapsed) {
@@ -4147,7 +4169,7 @@ function render() {
   renderClinical(pathway, lesion);
 }
 
-applyTheme(state.theme);
+applyTheme(state.themeMode);
 applyPanelCollapse("left", true);
 applyPanelCollapse("right", true);
 setupCollapsibleSections();

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Neuro Pathway & Lesion Simulator</title>
-    <link rel="stylesheet" href="./styles.css?v=20260627-header" />
+    <link rel="stylesheet" href="./styles.css?v=20260627-cycle" />
   </head>
   <body>
     <div
@@ -171,15 +171,13 @@
         <button type="button" class="app-nav-tab" data-target="clinical">Clinical</button>
       </nav>
 
-      <div class="header-mode">
+      <button class="header-mode" id="themeToggle" type="button" aria-label="Theme mode: Auto. Click to change.">
         <span class="header-mode-label">Mode</span>
-        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to day mode" aria-pressed="false">
-          <span class="theme-track" aria-hidden="true">
-            <span class="theme-thumb"></span>
-          </span>
-          <span id="themeText">Night</span>
-        </button>
-      </div>
+        <span class="header-mode-value">
+          <span id="themeText">Auto</span>
+          <span class="header-mode-icon" id="themeIcon" aria-hidden="true">☀</span>
+        </span>
+      </button>
     </header>
 
     <main class="app-shell" id="appShell" data-left-collapsed="true" data-right-collapsed="true">

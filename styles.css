@@ -264,39 +264,65 @@ button {
 
 .header-mode {
   display: inline-flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1px;
   flex: 0 0 auto;
-  padding: 5px 12px 5px 14px;
+  min-width: 78px;
+  padding: 6px 16px;
+  cursor: pointer;
   border: 1px solid color-mix(in srgb, var(--line) 72%, var(--clay-highlight));
   border-radius: 999px;
   background:
     linear-gradient(145deg, var(--clay-highlight), transparent 58%),
     var(--clay-surface);
   box-shadow: var(--clay-raised);
+  text-align: left;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.header-mode:hover,
+.header-mode:focus-visible {
+  background:
+    linear-gradient(145deg, var(--clay-highlight), transparent 58%),
+    var(--clay-surface-hover);
+  box-shadow: var(--clay-raised-hover);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.header-mode:active {
+  box-shadow: var(--clay-pressed);
+  transform: translateY(1px);
 }
 
 .header-mode-label {
   color: var(--muted);
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.header-mode .theme-toggle {
-  padding: 0;
-  min-height: 0;
-  border: 0;
-  background: none;
-  box-shadow: none;
-  transform: none;
+.header-mode-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
-.header-mode .theme-toggle:hover {
-  background: none;
-  box-shadow: none;
-  transform: none;
+.header-mode-icon {
+  font-size: 0.92rem;
+  line-height: 1;
+  color: var(--path-color);
 }
 
 @media (max-width: 720px) {
@@ -321,10 +347,6 @@ button {
 
   .header-mode {
     margin-left: auto;
-  }
-
-  .header-mode-label {
-    display: none;
   }
 
   .brand-word {
@@ -454,80 +476,6 @@ button {
   gap: 12px;
 }
 
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 28px;
-  cursor: pointer;
-  border: 1px solid color-mix(in srgb, var(--line) 72%, var(--clay-highlight));
-  border-radius: 999px;
-  background:
-    linear-gradient(145deg, var(--clay-highlight), transparent 58%),
-    var(--clay-surface);
-  color: var(--text-soft);
-  padding: 3px 9px 3px 3px;
-  box-shadow: var(--clay-raised);
-  transition:
-    background 160ms ease,
-    border-color 160ms ease,
-    box-shadow 160ms ease,
-    transform 160ms ease;
-}
-
-.theme-toggle:hover {
-  background:
-    linear-gradient(145deg, var(--clay-highlight), transparent 58%),
-    var(--clay-surface-hover);
-  box-shadow: var(--clay-raised-hover);
-  transform: translateY(-1px);
-}
-
-.theme-toggle:active {
-  box-shadow: var(--clay-pressed);
-  transform: translateY(1px);
-}
-
-.theme-toggle:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--path-color) 70%, transparent);
-  outline-offset: 2px;
-}
-
-.theme-track {
-  position: relative;
-  width: 34px;
-  height: 20px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--path-color) 16%, var(--clay-tray));
-  box-shadow: var(--clay-well);
-}
-
-.theme-thumb {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background:
-    linear-gradient(145deg, var(--clay-highlight), transparent 64%),
-    var(--text);
-  box-shadow:
-    0 2px 4px var(--clay-shade),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  transition: transform 180ms ease;
-}
-
-[data-theme="day"] .theme-thumb {
-  transform: translateX(14px);
-}
-
-#themeText {
-  font-size: 0.7rem;
-  font-weight: 750;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
 
 .intro-copy {
   margin-top: 12px;
@@ -1047,7 +995,7 @@ h2 {
 
 .workspace > .canvas-shell {
   flex: 1 1 auto;
-  min-height: 480px;
+  min-height: clamp(560px, 70vh, 820px);
 }
 
 .topbar {
@@ -1101,7 +1049,7 @@ h2 {
 
 .canvas-shell {
   position: relative;
-  min-height: 420px;
+  min-height: 540px;
   height: 100%;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -1600,8 +1548,8 @@ h2 {
 
 .cross-section-canvas {
   width: 100%;
-  height: clamp(330px, 38vh, 480px);
-  min-height: 330px;
+  height: clamp(420px, 50vh, 620px);
+  min-height: 420px;
   border: 1px solid var(--line-soft);
   border-radius: 10px;
   background:
@@ -2170,8 +2118,8 @@ h2 {
   }
 
   .canvas-shell {
-    height: min(68vh, 500px);
-    min-height: 380px;
+    height: min(82vh, 620px);
+    min-height: 460px;
   }
 
   .cross-section-tabs {
@@ -2179,8 +2127,8 @@ h2 {
   }
 
   .cross-section-canvas {
-    height: clamp(260px, 72vw, 340px);
-    min-height: 260px;
+    height: clamp(320px, 84vw, 440px);
+    min-height: 320px;
   }
 
   .cross-section-panel,
