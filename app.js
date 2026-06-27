@@ -4424,3 +4424,49 @@ function initHelpOverlay() {
 }
 
 initHelpOverlay();
+
+// ---------------------------------------------------------------------------
+// Header navigation
+// ---------------------------------------------------------------------------
+
+function initHeaderNav() {
+  const tabs = Array.from(document.querySelectorAll(".app-nav-tab"));
+  if (!tabs.length) return;
+
+  const isStacked = () => window.matchMedia("(max-width: 1120px)").matches;
+
+  function focusRegion(target) {
+    if (target === "pathway") {
+      if (els.appShell.dataset.leftCollapsed === "true") applyPanelCollapse("left", false);
+      if (isStacked()) {
+        document.querySelector(".panel-left")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } else if (target === "clinical") {
+      if (els.appShell.dataset.rightCollapsed === "true") applyPanelCollapse("right", false);
+      if (isStacked()) {
+        document.querySelector(".panel-right")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } else {
+      const canvas = document.querySelector(".canvas-shell");
+      if (isStacked()) {
+        canvas?.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        canvas?.closest(".workspace")?.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((other) => {
+        const active = other === tab;
+        other.classList.toggle("is-active", active);
+        if (active) other.setAttribute("aria-current", "true");
+        else other.removeAttribute("aria-current");
+      });
+      focusRegion(tab.dataset.target);
+    });
+  });
+}
+
+initHeaderNav();
