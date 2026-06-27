@@ -3357,24 +3357,12 @@ darkModeQuery.addEventListener("change", () => {
 function applyPanelCollapse(side, collapsed) {
   const isLeft = side === "left";
   const datasetKey = isLeft ? "leftCollapsed" : "rightCollapsed";
-  const button = isLeft ? els.leftPanelToggle : els.rightPanelToggle;
   const content = isLeft ? els.leftPanelContent : els.rightPanelContent;
-  const expanded = !collapsed;
 
   els.appShell.dataset[datasetKey] = String(collapsed);
-  button.setAttribute("aria-expanded", String(expanded));
-  button.setAttribute("aria-label", `${collapsed ? "Expand" : "Collapse"} ${side} panel`);
-  content.setAttribute("aria-hidden", String(collapsed));
-  button.querySelector("span").textContent = isLeft === collapsed ? ">" : "<";
+  if (content) content.setAttribute("aria-hidden", String(collapsed));
+  syncNavState();
 }
-
-els.leftPanelToggle.addEventListener("click", () => {
-  applyPanelCollapse("left", els.appShell.dataset.leftCollapsed !== "true");
-});
-
-els.rightPanelToggle.addEventListener("click", () => {
-  applyPanelCollapse("right", els.appShell.dataset.rightCollapsed !== "true");
-});
 
 function applySectionCollapse(section, collapsed) {
   const button = section.querySelector(".section-toggle");
@@ -3582,6 +3570,82 @@ function svgNode(tagName, attributes = {}) {
 
 function setText(element, text) {
   element.textContent = text;
+}
+
+// Key clinical terms worth surfacing in the localization readouts. Ordered
+// longest-first so multi-word phrases win over their component words.
+const CLINICAL_TERMS = [
+  "upper motor neuron",
+  "lower motor neuron",
+  "internal capsule",
+  "pyramidal decussation",
+  "optic chiasm",
+  "optic tract",
+  "optic nerve",
+  "spinal cord",
+  "cranial nerve",
+  "contralateral",
+  "ipsilateral",
+  "bilateral",
+  "unilateral",
+  "crossed",
+  "decussation",
+  "decussates",
+  "hyperreflexia",
+  "hyporeflexia",
+  "areflexia",
+  "Babinski",
+  "spasticity",
+  "spastic",
+  "flaccid",
+  "ptosis",
+  "miosis",
+  "mydriasis",
+  "anhidrosis",
+  "ataxia",
+  "nystagmus",
+  "dysarthria",
+  "dysmetria",
+  "hemianopia",
+  "hemianopsia",
+  "quadrantanopia",
+  "brainstem",
+  "medulla",
+  "midbrain",
+  "thalamus",
+  "cerebellum",
+  "chiasm",
+  "cortex",
+  "UMN",
+  "LMN",
+];
+
+const TERM_REGEX = new RegExp(
+  `\\b(${[...CLINICAL_TERMS]
+    .sort((a, b) => b.length - a.length)
+    .map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+    .join("|")})\\b`,
+  "gi",
+);
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"]/g, (char) => {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[char];
+  });
+}
+
+function highlightTerms(text) {
+  return escapeHtml(text == null ? "" : text).replace(
+    TERM_REGEX,
+    '<mark class="kw">$1</mark>',
+  );
+}
+
+// Sets text content with key clinical terms wrapped for emphasis. Source text
+// is from the bundled dataset (not user input) and is HTML-escaped regardless.
+function setRichText(element, text) {
+  if (!element) return;
+  element.innerHTML = highlightTerms(text);
 }
 
 function formatCount(number) {
@@ -3962,15 +4026,15 @@ function renderClassificationOverlay(system, classification) {
 function renderClassificationPanel(classification) {
   setText(els.classificationCode, classification.code);
   setText(els.classificationTitle, classification.name);
-  setText(els.classificationSummary, classification.summary);
+  setRichText(els.classificationSummary, classification.summary);
   setText(els.classificationRegion, classification.region);
-  setText(els.classificationSignature, classification.signature);
-  setText(els.classificationLocalization, classification.localization);
-  setText(els.classificationPitfall, classification.pitfall);
+  setRichText(els.classificationSignature, classification.signature);
+  setRichText(els.classificationLocalization, classification.localization);
+  setRichText(els.classificationPitfall, classification.pitfall);
   els.classificationReasoning.replaceChildren(
     ...classification.reasoning.map((step) => {
       const item = document.createElement("li");
-      item.textContent = step;
+      item.innerHTML = highlightTerms(step);
       return item;
     }),
   );
@@ -4134,21 +4198,21 @@ function renderClinical(pathway, lesion) {
   setText(els.decussationText, pathway.decussation);
   setText(els.ruleText, pathway.rule);
   setText(els.patternText, lesion.pattern ?? pathway.pattern ?? pathway.rule);
-  setText(els.findingTitle, lesion.findingTitle);
-  setText(els.findingSummary, lesion.summary);
-  setText(els.motorDeficit, lesion.motor);
-  setText(els.sensoryDeficit, lesion.sensory);
-  setText(els.reflexDeficit, lesion.reflexes);
-  setText(els.clinicalLaterality, lesion.clinicalLaterality);
-  setText(els.networkDeficit, lesion.network ?? pathway.network ?? pathway.type);
-  setText(els.pitfallText, lesion.pitfall ?? pathway.pitfall ?? "Check crossing level before deciding ipsilateral versus contralateral.");
+  setRichText(els.findingTitle, lesion.findingTitle);
+  setRichText(els.findingSummary, lesion.summary);
+  setRichText(els.motorDeficit, lesion.motor);
+  setRichText(els.sensoryDeficit, lesion.sensory);
+  setRichText(els.reflexDeficit, lesion.reflexes);
+  setRichText(els.clinicalLaterality, lesion.clinicalLaterality);
+  setRichText(els.networkDeficit, lesion.network ?? pathway.network ?? pathway.type);
+  setRichText(els.pitfallText, lesion.pitfall ?? pathway.pitfall ?? "Check crossing level before deciding ipsilateral versus contralateral.");
   setText(els.reasoningCode, lesion.code);
-  setText(els.localizationClue, lesion.clue);
+  setRichText(els.localizationClue, lesion.clue);
 
   els.reasoningList.replaceChildren(
     ...lesion.reasoning.map((step) => {
       const item = document.createElement("li");
-      item.textContent = step;
+      item.innerHTML = highlightTerms(step);
       return item;
     }),
   );
@@ -4451,44 +4515,54 @@ initHelpOverlay();
 // Header navigation
 // ---------------------------------------------------------------------------
 
+function syncNavState() {
+  if (!els.appShell) return;
+  const leftOpen = els.appShell.dataset.leftCollapsed !== "true";
+  const rightOpen = els.appShell.dataset.rightCollapsed !== "true";
+  const zoomed = !leftOpen && !rightOpen;
+  document.querySelectorAll(".app-nav-tab").forEach((tab) => {
+    const target = tab.dataset.target;
+    const active =
+      (target === "pathway" && leftOpen) ||
+      (target === "clinical" && rightOpen) ||
+      (target === "cockpit" && zoomed);
+    tab.classList.toggle("is-active", active);
+    if (active) tab.setAttribute("aria-current", "true");
+    else tab.removeAttribute("aria-current");
+  });
+}
+
 function initHeaderNav() {
   const tabs = Array.from(document.querySelectorAll(".app-nav-tab"));
   if (!tabs.length) return;
 
   const isStacked = () => window.matchMedia("(max-width: 1120px)").matches;
 
-  function focusRegion(target) {
-    if (target === "pathway") {
-      if (els.appShell.dataset.leftCollapsed === "true") applyPanelCollapse("left", false);
-      if (isStacked()) {
-        document.querySelector(".panel-left")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    } else if (target === "clinical") {
-      if (els.appShell.dataset.rightCollapsed === "true") applyPanelCollapse("right", false);
-      if (isStacked()) {
-        document.querySelector(".panel-right")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    } else {
-      const canvas = document.querySelector(".canvas-shell");
-      if (isStacked()) {
-        canvas?.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else {
-        canvas?.closest(".workspace")?.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    }
-  }
-
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      tabs.forEach((other) => {
-        const active = other === tab;
-        other.classList.toggle("is-active", active);
-        if (active) other.setAttribute("aria-current", "true");
-        else other.removeAttribute("aria-current");
-      });
-      focusRegion(tab.dataset.target);
+      const target = tab.dataset.target;
+      if (target === "pathway") {
+        applyPanelCollapse("left", els.appShell.dataset.leftCollapsed !== "true");
+        if (isStacked() && els.appShell.dataset.leftCollapsed === "false") {
+          document.querySelector(".panel-left")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      } else if (target === "clinical") {
+        applyPanelCollapse("right", els.appShell.dataset.rightCollapsed !== "true");
+        if (isStacked() && els.appShell.dataset.rightCollapsed === "false") {
+          document.querySelector(".panel-right")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      } else {
+        // Cockpit: zoom the diagram by collapsing both side panels.
+        applyPanelCollapse("left", true);
+        applyPanelCollapse("right", true);
+        const canvas = document.querySelector(".canvas-shell");
+        if (isStacked()) canvas?.scrollIntoView({ behavior: "smooth", block: "start" });
+        else canvas?.closest(".workspace")?.scrollTo({ top: 0, behavior: "smooth" });
+      }
     });
   });
+
+  syncNavState();
 }
 
 initHeaderNav();

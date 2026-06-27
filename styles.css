@@ -148,11 +148,19 @@ button {
 }
 
 .app-shell[data-left-collapsed="true"] {
-  --left-panel-width: 56px;
+  --left-panel-width: 0px;
 }
 
 .app-shell[data-right-collapsed="true"] {
-  --right-panel-width: 56px;
+  --right-panel-width: 0px;
+}
+
+.app-shell[data-left-collapsed="true"] .panel-left {
+  border-right-width: 0;
+}
+
+.app-shell[data-right-collapsed="true"] .panel-right {
+  border-left-width: 0;
 }
 
 /* ---------------------------------------------------------------------------
@@ -388,65 +396,9 @@ button {
     visibility 160ms ease;
 }
 
-.panel-collapse {
-  position: sticky;
-  z-index: 5;
-  top: 0;
-  align-self: flex-end;
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  width: 28px;
-  height: 28px;
-  cursor: pointer;
-  border: 1px solid color-mix(in srgb, var(--line) 72%, var(--clay-highlight));
-  border-radius: 999px;
-  background:
-    linear-gradient(145deg, var(--clay-highlight), transparent 58%),
-    var(--clay-surface);
-  color: var(--text);
-  box-shadow: var(--clay-raised);
-  transition:
-    background 160ms ease,
-    border-color 160ms ease,
-    box-shadow 160ms ease,
-    color 160ms ease,
-    transform 160ms ease;
-}
-
-.panel-collapse-right {
-  align-self: flex-start;
-}
-
-.panel-collapse span {
-  font-size: 1rem;
-  font-weight: 900;
-  line-height: 1;
-}
-
-.panel-collapse:hover {
-  border-color: color-mix(in srgb, var(--path-color) 54%, var(--line));
-  background:
-    linear-gradient(145deg, var(--clay-highlight), transparent 58%),
-    var(--clay-surface-hover);
-  box-shadow: var(--clay-raised-hover);
-  color: var(--path-color);
-  transform: translateY(-1px);
-}
-
-.panel-collapse:active {
-  box-shadow: var(--clay-pressed);
-  transform: translateY(1px);
-}
-
-.panel-collapse:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--path-color) 70%, transparent);
-  outline-offset: 2px;
-}
-
 .app-shell[data-left-collapsed="true"] .panel-left,
 .app-shell[data-right-collapsed="true"] .panel-right {
-  padding-inline: 8px;
+  padding-inline: 0;
 }
 
 .app-shell[data-left-collapsed="true"] .panel-left .panel-content,
@@ -457,11 +409,6 @@ button {
   padding-top: 0;
   opacity: 0;
   pointer-events: none;
-}
-
-.app-shell[data-left-collapsed="true"] .panel-left .panel-collapse,
-.app-shell[data-right-collapsed="true"] .panel-right .panel-collapse {
-  align-self: center;
 }
 
 .intro-block {
@@ -1915,6 +1862,21 @@ h2 {
   line-height: 1.5;
 }
 
+/* Key clinical terms emphasised inside the localization readouts. */
+mark.kw {
+  background: color-mix(in srgb, var(--path-color) 18%, transparent);
+  color: inherit;
+  font-weight: 750;
+  padding: 0 0.22em;
+  border-radius: 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+[data-theme="day"] mark.kw {
+  background: color-mix(in srgb, var(--path-color) 24%, transparent);
+}
+
 @media (max-width: 1120px) {
   /* Below the full 3-column cockpit the right panel wraps to its own row,
      so the viewport-locked layout no longer fits — restore page scroll. */
@@ -1934,11 +1896,12 @@ h2 {
   }
 
   .app-shell[data-left-collapsed="true"] {
-    --left-panel-width: 56px;
+    --left-panel-width: 0px;
   }
 
+  .app-shell[data-left-collapsed="true"] .panel-left,
   .app-shell[data-right-collapsed="true"] .panel-right {
-    min-height: 56px;
+    display: none;
   }
 
   .panel,
@@ -1984,22 +1947,7 @@ h2 {
 
   .app-shell[data-left-collapsed="true"] .panel-left,
   .app-shell[data-right-collapsed="true"] .panel-right {
-    min-height: 52px;
-    padding-block: 10px;
-  }
-
-  .panel-collapse,
-  .panel-collapse-right {
-    position: relative;
-    top: auto;
-    align-self: flex-end;
-    width: 34px;
-    height: 34px;
-  }
-
-  .app-shell[data-left-collapsed="true"] .panel-left .panel-collapse,
-  .app-shell[data-right-collapsed="true"] .panel-right .panel-collapse {
-    align-self: flex-end;
+    display: none;
   }
 
   .workspace {
