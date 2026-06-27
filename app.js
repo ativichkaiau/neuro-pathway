@@ -4034,7 +4034,9 @@ function renderClassificationPanel(classification) {
   els.classificationReasoning.replaceChildren(
     ...classification.reasoning.map((step) => {
       const item = document.createElement("li");
-      item.innerHTML = highlightTerms(step);
+      const text = document.createElement("span");
+      text.innerHTML = highlightTerms(step);
+      item.appendChild(text);
       return item;
     }),
   );
@@ -4212,7 +4214,9 @@ function renderClinical(pathway, lesion) {
   els.reasoningList.replaceChildren(
     ...lesion.reasoning.map((step) => {
       const item = document.createElement("li");
-      item.innerHTML = highlightTerms(step);
+      const text = document.createElement("span");
+      text.innerHTML = highlightTerms(step);
+      item.appendChild(text);
       return item;
     }),
   );

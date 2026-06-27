@@ -144,9 +144,11 @@ button {
     linear-gradient(180deg, var(--grid-line-y) 1px, transparent 1px),
     var(--bg);
   background-size: 72px 72px;
-  transition: grid-template-columns 220ms ease;
 }
 
+/* Panels snap open/closed: animating grid-template-columns track sizes is
+   unreliable (interpolating to/from minmax() leaves a track stuck at 0px,
+   which collapses the panel's text column and overlaps the wrapped lines). */
 .app-shell[data-left-collapsed="true"] {
   --left-panel-width: 0px;
 }
