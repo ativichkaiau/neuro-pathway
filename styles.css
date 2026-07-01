@@ -852,6 +852,22 @@ h2 {
     inset 0 -1px 0 var(--clay-highlight);
 }
 
+.classifier-group-label {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 3px 1px;
+}
+
+.classifier-group-label:not(:first-child) {
+  margin-top: 4px;
+  border-top: 1px solid var(--line-soft);
+  padding-top: 8px;
+}
+
 .classifier-tab {
   min-height: 38px;
   cursor: pointer;

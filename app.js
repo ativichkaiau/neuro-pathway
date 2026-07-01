@@ -2327,6 +2327,7 @@ const classificationSystems = [
     name: "Brainstem",
     short: "Crossed signs",
     color: "#59d9e8",
+    kind: "syndrome",
     items: [
       {
         id: "weber",
@@ -2449,6 +2450,7 @@ const classificationSystems = [
     name: "Spinal Cord",
     short: "Cord syndromes",
     color: "#f3cd5a",
+    kind: "syndrome",
     items: [
       {
         id: "brown-sequard",
@@ -3653,9 +3655,24 @@ function formatCount(number) {
   return String(number).padStart(2, "0");
 }
 
+const classifierGroups = [
+  { kind: "region", label: "Anatomical regions" },
+  { kind: "syndrome", label: "Lesion syndromes" },
+];
+
 function renderClassifierTabs(system) {
-  els.classifierTabs.replaceChildren(
-    ...classificationSystems.map((item) => {
+  const nodes = [];
+
+  classifierGroups.forEach((group) => {
+    const items = classificationSystems.filter((item) => (item.kind ?? "region") === group.kind);
+    if (!items.length) return;
+
+    const label = document.createElement("span");
+    label.className = "classifier-group-label";
+    label.textContent = group.label;
+    nodes.push(label);
+
+    items.forEach((item) => {
       const button = document.createElement("button");
       button.className = "classifier-tab";
       button.type = "button";
@@ -3670,9 +3687,11 @@ function renderClassifierTabs(system) {
         renderClassification();
         renderCrossSection();
       });
-      return button;
-    }),
-  );
+      nodes.push(button);
+    });
+  });
+
+  els.classifierTabs.replaceChildren(...nodes);
 }
 
 function renderClassifierList(system, classification) {
