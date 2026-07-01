@@ -2032,6 +2032,7 @@ const pathways = [
   {
     id: "spinal-hemisection",
     name: "Spinal Hemisection Pattern",
+    kind: "pattern",
     type: "Integrated",
     complexity: "Integrated",
     color: "#f3cd5a",
@@ -3699,9 +3700,29 @@ function renderClassifierList(system, classification) {
   setText(els.classifierCount, formatCount(system.items.length));
 }
 
+const pathwayGroups = [
+  { id: "pathway", name: "Anatomical Pathways", short: "Normal tract flow", color: "#59d9e8" },
+  { id: "pattern", name: "Lesion Patterns", short: "Integrated lesion syndromes", color: "#f3cd5a" },
+];
+
+function getPathwayGroupId(pathway) {
+  return pathway.kind === "pattern" ? "pattern" : "pathway";
+}
+
 function renderPathwayButtons() {
-  els.pathwayList.replaceChildren(
-    ...pathways.map((pathway) => {
+  const nodes = [];
+
+  pathwayGroups.forEach((group) => {
+    const groupItems = pathways.filter((pathway) => getPathwayGroupId(pathway) === group.id);
+    if (!groupItems.length) return;
+
+    const heading = document.createElement("div");
+    heading.className = "lesion-group-heading";
+    heading.style.setProperty("--group-color", group.color);
+    heading.innerHTML = `<span class="lesion-group-copy"><strong>${group.name}</strong><small>${group.short}</small></span><b>${formatCount(groupItems.length)}</b>`;
+    nodes.push(heading);
+
+    groupItems.forEach((pathway) => {
       const button = document.createElement("button");
       button.className = "pathway-button";
       button.type = "button";
@@ -3721,9 +3742,11 @@ function renderPathwayButtons() {
       copy.innerHTML = `<strong>${pathway.name}</strong><span>${pathway.description}</span><span class="pathway-meta"><b>${pathway.type}</b><b>${pathway.complexity ?? "Foundational"}</b></span>`;
 
       button.append(accent, copy);
-      return button;
-    }),
-  );
+      nodes.push(button);
+    });
+  });
+
+  els.pathwayList.replaceChildren(...nodes);
   setText(els.pathwayCount, formatCount(pathways.length));
 }
 
