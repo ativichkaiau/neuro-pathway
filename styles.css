@@ -632,6 +632,16 @@ h2 {
   gap: 8px;
 }
 
+/* Keep the classification list a fixed height so switching systems (which
+   have different item counts) doesn't resize the box and shift the panel. */
+.classifier-list {
+  align-content: start;
+  height: clamp(320px, 44vh, 480px);
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  padding-right: 2px;
+}
+
 .pathway-button,
 .lesion-button,
 .classifier-button {
@@ -1910,6 +1920,13 @@ mark.kw {
   .workspace {
     overflow: visible;
     height: auto;
+  }
+
+  /* Stacked layout scrolls the page, so let the classification list flow
+     naturally instead of nesting a fixed-height scroll region. */
+  .classifier-list {
+    height: auto;
+    overflow: visible;
   }
 
   .panel-right {
