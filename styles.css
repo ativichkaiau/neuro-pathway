@@ -1938,13 +1938,6 @@ mark.kw {
     height: auto;
   }
 
-  /* Stacked layout scrolls the page, so let the classification list flow
-     naturally instead of nesting a fixed-height scroll region. */
-  .classifier-list {
-    height: auto;
-    overflow: visible;
-  }
-
   .panel-right {
     grid-column: 1 / -1;
     border-width: 1px 0 0;
