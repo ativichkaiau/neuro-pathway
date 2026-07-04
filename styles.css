@@ -1,41 +1,48 @@
 :root {
   color-scheme: dark;
-  --bg: #07090a;
-  --panel: #101416;
-  --panel-strong: #151b1e;
-  --surface: #0d1113;
-  --surface-soft: #171d20;
-  --line: #293137;
-  --line-soft: #1d2428;
-  --glass: rgba(13, 17, 19, 0.9);
-  --glass-strong: rgba(13, 17, 19, 0.96);
-  --glass-card: rgba(16, 20, 22, 0.82);
-  --glass-line: rgba(222, 244, 240, 0.14);
-  --grid-line-x: rgba(255, 255, 255, 0.03);
-  --grid-line-y: rgba(255, 255, 255, 0.025);
-  --canvas-sheen: rgba(255, 255, 255, 0.028);
-  --anatomy-fill: rgba(255, 255, 255, 0.035);
-  --anatomy-stroke: rgba(220, 238, 236, 0.16);
-  --fold-stroke: rgba(220, 238, 236, 0.11);
-  --midline-stroke: rgba(255, 255, 255, 0.12);
-  --label-line: rgba(220, 238, 236, 0.2);
-  --text: #eef7f5;
-  --text-soft: #b9c8c6;
-  --muted: #798987;
-  --cyan: #59d9e8;
-  --sensory: #58a9ff;
-  --motor: #f0b24d;
-  --visual: #b48cff;
-  --lesion: #ff633f;
-  --damage: #b8544d;
-  --ok: #91e6bc;
-  --shadow: rgba(0, 0, 0, 0.24);
-  --inner-light: rgba(255, 255, 255, 0.04);
-  --clay-surface: #171d20;
-  --clay-surface-hover: #1c2427;
-  --clay-tray: #0b0f11;
-  --clay-highlight: rgba(255, 255, 255, 0.09);
-  --clay-shade: rgba(0, 0, 0, 0.46);
+  /* Bioluminescent deep-brain — glow in the dark ocean */
+  --bg: #060b12;
+  --panel: #0b1621;
+  --panel-strong: #0d1a26;
+  --surface: #091320;
+  --surface-soft: #10212d;
+  --line: rgba(98, 208, 216, 0.16);
+  --line-soft: rgba(98, 208, 216, 0.09);
+  --glass: rgba(9, 19, 27, 0.9);
+  --glass-strong: rgba(9, 19, 27, 0.96);
+  --glass-card: rgba(12, 24, 33, 0.82);
+  --glass-line: rgba(130, 235, 228, 0.16);
+  --grid-line-x: rgba(120, 222, 224, 0.035);
+  --grid-line-y: rgba(120, 222, 224, 0.028);
+  --canvas-sheen: rgba(90, 220, 220, 0.03);
+  --anatomy-fill: rgba(120, 230, 224, 0.04);
+  --anatomy-stroke: rgba(150, 228, 224, 0.18);
+  --fold-stroke: rgba(150, 228, 224, 0.12);
+  --midline-stroke: rgba(120, 230, 224, 0.14);
+  --label-line: rgba(150, 228, 224, 0.22);
+  --text: #e3f6f2;
+  --text-soft: #a6cbc9;
+  --muted: #6f9599;
+  --cyan: #45e0d6;
+  --sensory: #5aa8ff;
+  --motor: #ffce6e;
+  --visual: #a488ff;
+  --lesion: #ff6a5a;
+  --damage: #c76a62;
+  --ok: #74efc0;
+  --shadow: rgba(0, 8, 12, 0.5);
+  --inner-light: rgba(130, 235, 228, 0.05);
+  --clay-surface: #10202b;
+  --clay-surface-hover: #162833;
+  --clay-tray: #070f17;
+  --clay-highlight: rgba(130, 235, 228, 0.1);
+  --clay-shade: rgba(0, 6, 10, 0.5);
+  --glow-teal: rgba(69, 224, 214, 0.55);
+  --glow-violet: rgba(164, 136, 255, 0.5);
+  --glow-amber: rgba(255, 206, 110, 0.5);
+  --deep-a: #0d3a40;
+  --deep-b: #2a1e52;
+  --deep-c: #123043;
   --clay-raised:
     0 5px 10px rgba(0, 0, 0, 0.24),
     inset 1px 1px 0 var(--clay-highlight),
@@ -58,37 +65,49 @@
 
 [data-theme="day"] {
   color-scheme: light;
-  --bg: #edf4f2;
-  --panel: #edf5f4;
-  --panel-strong: #f7fbfa;
-  --surface: #f8fcfb;
-  --surface-soft: #e8f0ee;
-  --line: rgba(38, 65, 70, 0.2);
-  --line-soft: rgba(38, 65, 70, 0.13);
-  --glass: rgba(248, 252, 251, 0.9);
+  /* Sunlit shallows — bioluminescence read as saturated ink on tide-pool aqua */
+  --bg: #e4f3ef;
+  --panel: #e7f4f0;
+  --panel-strong: #f4fbf9;
+  --surface: #f6fcfb;
+  --surface-soft: #dcefeb;
+  --line: rgba(24, 92, 96, 0.2);
+  --line-soft: rgba(24, 92, 96, 0.12);
+  --glass: rgba(244, 251, 249, 0.9);
   --glass-strong: rgba(255, 255, 255, 0.96);
   --glass-card: rgba(255, 255, 255, 0.82);
-  --glass-line: rgba(32, 60, 64, 0.15);
-  --grid-line-x: rgba(25, 55, 62, 0.055);
-  --grid-line-y: rgba(25, 55, 62, 0.045);
-  --canvas-sheen: rgba(255, 255, 255, 0.52);
-  --anatomy-fill: rgba(30, 56, 61, 0.045);
-  --anatomy-stroke: rgba(30, 56, 61, 0.2);
-  --fold-stroke: rgba(30, 56, 61, 0.13);
-  --midline-stroke: rgba(30, 56, 61, 0.2);
-  --label-line: rgba(30, 56, 61, 0.26);
-  --text: #102225;
-  --text-soft: #31474a;
-  --muted: #667b7d;
-  --lesion: #de4f36;
-  --damage: #ae625c;
-  --shadow: rgba(42, 66, 70, 0.12);
-  --inner-light: rgba(255, 255, 255, 0.28);
-  --clay-surface: #e4ecea;
-  --clay-surface-hover: #edf4f2;
-  --clay-tray: #d7e1df;
-  --clay-highlight: rgba(255, 255, 255, 0.88);
-  --clay-shade: rgba(48, 72, 76, 0.2);
+  --glass-line: rgba(20, 90, 92, 0.16);
+  --grid-line-x: rgba(18, 90, 94, 0.06);
+  --grid-line-y: rgba(18, 90, 94, 0.05);
+  --canvas-sheen: rgba(255, 255, 255, 0.55);
+  --anatomy-fill: rgba(20, 90, 94, 0.05);
+  --anatomy-stroke: rgba(20, 84, 88, 0.22);
+  --fold-stroke: rgba(20, 84, 88, 0.14);
+  --midline-stroke: rgba(20, 84, 88, 0.22);
+  --label-line: rgba(20, 84, 88, 0.28);
+  --text: #072226;
+  --text-soft: #2c5559;
+  --muted: #5e8488;
+  --cyan: #12a79f;
+  --sensory: #3b7fe0;
+  --motor: #d8912b;
+  --visual: #7b5fe0;
+  --lesion: #e5563e;
+  --damage: #b06258;
+  --ok: #1f9e78;
+  --shadow: rgba(24, 66, 70, 0.14);
+  --inner-light: rgba(255, 255, 255, 0.6);
+  --clay-surface: #e2efeb;
+  --clay-surface-hover: #ebf6f3;
+  --clay-tray: #d2e6e1;
+  --clay-highlight: rgba(255, 255, 255, 0.9);
+  --clay-shade: rgba(24, 70, 74, 0.18);
+  --glow-teal: rgba(18, 167, 159, 0.28);
+  --glow-violet: rgba(123, 95, 224, 0.24);
+  --glow-amber: rgba(216, 145, 43, 0.26);
+  --deep-a: #bfe6df;
+  --deep-b: #d8ccf3;
+  --deep-c: #f1e2c2;
   --clay-raised:
     0 5px 10px rgba(48, 72, 76, 0.14),
     inset 1px 1px 0 var(--clay-highlight),
@@ -142,7 +161,7 @@ button {
   background:
     linear-gradient(90deg, var(--grid-line-x) 1px, transparent 1px),
     linear-gradient(180deg, var(--grid-line-y) 1px, transparent 1px),
-    var(--bg);
+    transparent;
   background-size: 72px 72px;
 }
 
@@ -3280,4 +3299,148 @@ mark.kw {
     animation: none !important;
     transition: none !important;
   }
+}
+
+/* ===========================================================================
+   Bioluminescent deep-brain — atmosphere & signature motifs
+   =========================================================================== */
+
+.deep-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Drifting depth-light blobs */
+.deep-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  opacity: 0.6;
+  will-change: transform;
+}
+
+.deep-blob-teal {
+  width: 48vw;
+  height: 48vw;
+  top: -14vw;
+  left: -8vw;
+  background: radial-gradient(circle, var(--deep-a), transparent 70%);
+  animation: deep-drift-a 27s ease-in-out infinite alternate;
+}
+
+.deep-blob-violet {
+  width: 44vw;
+  height: 44vw;
+  right: -8vw;
+  bottom: -16vw;
+  background: radial-gradient(circle, var(--deep-b), transparent 70%);
+  animation: deep-drift-b 33s ease-in-out infinite alternate;
+}
+
+.deep-blob-amber {
+  width: 30vw;
+  height: 30vw;
+  top: 38%;
+  left: 52%;
+  opacity: 0.4;
+  background: radial-gradient(circle, var(--deep-c), transparent 72%);
+  animation: deep-drift-c 39s ease-in-out infinite alternate;
+}
+
+@keyframes deep-drift-a {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(6vw, 5vw, 0); }
+}
+@keyframes deep-drift-b {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-5vw, -4vw, 0); }
+}
+@keyframes deep-drift-c {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-4vw, 3vw, 0) scale(1.16); }
+}
+
+/* Rising plankton — bioluminescent motes */
+.plankton {
+  position: absolute;
+  bottom: -6vh;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 10px 2px var(--glow-teal);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: plankton-rise linear infinite;
+}
+
+.plankton-a { left: 11%; animation-duration: 23s; animation-delay: -2s; }
+.plankton-b { left: 27%; width: 4px; height: 4px; animation-duration: 30s; animation-delay: -11s; background: var(--visual); box-shadow: 0 0 10px 2px var(--glow-violet); }
+.plankton-c { left: 43%; width: 6px; height: 6px; animation-duration: 26s; animation-delay: -6s; }
+.plankton-d { left: 61%; animation-duration: 34s; animation-delay: -17s; background: var(--motor); box-shadow: 0 0 10px 2px var(--glow-amber); }
+.plankton-e { left: 76%; width: 4px; height: 4px; animation-duration: 28s; animation-delay: -9s; background: var(--visual); box-shadow: 0 0 10px 2px var(--glow-violet); }
+.plankton-f { left: 89%; width: 6px; height: 6px; animation-duration: 32s; animation-delay: -21s; }
+
+@keyframes plankton-rise {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  12% { opacity: 0.85; }
+  50% { transform: translateY(-52vh) translateX(2.5vw); }
+  88% { opacity: 0.6; }
+  100% { transform: translateY(-104vh) translateX(-1.5vw); opacity: 0; }
+}
+
+/* Soft pulse halo — a slow bioluminescent breath */
+@keyframes lumen-pulse {
+  0%, 100% { box-shadow: var(--clay-raised), 0 0 0 0 transparent; }
+  50% { box-shadow: var(--clay-raised), 0 0 18px 1px var(--glow-teal); }
+}
+
+/* Signature glow on the brand tile */
+.brand-tile {
+  animation: lumen-breathe 6s ease-in-out infinite;
+}
+
+@keyframes lumen-breathe {
+  0%, 100% { box-shadow: var(--clay-raised), 0 4px 12px color-mix(in srgb, #11807f 45%, transparent), 0 0 12px var(--glow-teal); }
+  50% { box-shadow: var(--clay-raised), 0 4px 16px color-mix(in srgb, #11807f 55%, transparent), 0 0 24px var(--glow-teal); }
+}
+
+/* Headline word + active nav glow */
+.brand-version {
+  text-shadow: 0 0 14px var(--glow-teal);
+}
+
+.app-nav-tab.is-active {
+  text-shadow: 0 0 12px var(--glow-teal);
+}
+
+/* Primary buttons breathe with a soft halo */
+.intro-primary,
+.help-primary {
+  animation: lumen-pulse 5.5s ease-in-out infinite;
+}
+
+/* Active pathway/lesion cards get a living glow */
+.pathway-button[aria-pressed="true"],
+.lesion-button[aria-pressed="true"],
+.classifier-button[aria-pressed="true"],
+.classifier-tab[aria-selected="true"] {
+  box-shadow:
+    var(--clay-pressed),
+    0 0 0 1px color-mix(in srgb, var(--class-color) 24%, transparent),
+    0 0 16px color-mix(in srgb, var(--path-color) 34%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deep-blob,
+  .plankton,
+  .brand-tile,
+  .intro-primary,
+  .help-primary {
+    animation: none !important;
+  }
+  .plankton { opacity: 0.5; }
 }

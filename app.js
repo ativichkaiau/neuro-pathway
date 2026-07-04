@@ -3094,7 +3094,7 @@ const classificationSystems = [
 ];
 
 const lesionGroups = [
-  { id: "baseline", name: "Baseline", short: "Normal reference", color: "#91e6bc" },
+  { id: "baseline", name: "All aglow", short: "The intact, lit baseline", color: "#91e6bc" },
   { id: "cortical", name: "Cortical / Network", short: "Brodmann and association cortex", color: "#caa2ff" },
   { id: "subcortical", name: "Subcortical / Thalamic", short: "Deep relays and projection fibers", color: "#7cc7ff" },
   { id: "brainstem", name: "Brainstem", short: "Cranial nerve plus long-tract logic", color: "#59d9e8" },
@@ -3309,7 +3309,7 @@ const els = {
 };
 
 const THEME_MODES = ["auto", "day", "night"];
-const THEME_LABELS = { auto: "Auto", day: "Day", night: "Night" };
+const THEME_LABELS = { auto: "Auto", day: "Shallows", night: "Deep" };
 const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
 function getStoredThemeMode() {
@@ -3543,8 +3543,8 @@ function getNormalState(pathway) {
   return {
     id: "normal",
     code: `${pathway.id.toUpperCase().slice(0, 4)}-00`,
-    name: "No lesion / normal",
-    short: "Intact reference pathway",
+    name: "All aglow",
+    short: "Every fiber still lit",
     isNormal: true,
     affectedSegments: [],
     signal: "Intact",
@@ -3720,8 +3720,8 @@ function renderClassifierList(system, classification) {
 }
 
 const pathwayGroups = [
-  { id: "pathway", name: "Anatomical Pathways", short: "Normal tract flow", color: "#59d9e8" },
-  { id: "pattern", name: "Lesion Patterns", short: "Integrated lesion syndromes", color: "#f3cd5a" },
+  { id: "pathway", name: "Living tracts", short: "Tracts that still glow", color: "#59d9e8" },
+  { id: "pattern", name: "Dark patterns", short: "Where the light breaks", color: "#f3cd5a" },
 ];
 
 function getPathwayGroupId(pathway) {
@@ -4293,24 +4293,24 @@ const INTRO_AUTO_ADVANCE_MS = 4200;
 
 const introSteps = [
   {
-    label: "Normal",
-    title: "Start with intact flow",
-    copy: "Begin from the no-lesion state. Follow the signal from origin to target so the normal route is anchored before anything is interrupted.",
+    label: "Aglow",
+    title: "Start with the glow",
+    copy: "Begin in the all-aglow state. Follow the light from origin to target so the living route is anchored before anything goes dark.",
   },
   {
     label: "Interrupt",
-    title: "Place a lesion",
-    copy: "Drop a lesion at any level. Fibers downstream of the break fall silent, and that is where the deficit pattern begins.",
+    title: "Drop a lesion",
+    copy: "Break the tract at any depth. Fibers downstream of the break go dark, and that is where the deficit pattern begins.",
   },
   {
     label: "Localize",
-    title: "Match break to sign",
-    copy: "Read the break against decussation, laterality, and somatotopy. The clinical panel explains why that sign belongs to that level.",
+    title: "Read the dark",
+    copy: "Read the break against decussation, laterality, and somatotopy. The reading panel explains why that sign belongs to that level.",
   },
   {
-    label: "Classify",
-    title: "Name the lesion group",
-    copy: "Use the classification panels and cross sections to connect the same lesion to Brodmann, brainstem, cord, subcortical, vascular, or peripheral logic.",
+    label: "Name it",
+    title: "Name the field mark",
+    copy: "Use the field marks and deep slices to connect the same lesion to Brodmann, brainstem, cord, subcortical, vascular, or peripheral logic.",
   },
 ];
 
@@ -4371,7 +4371,7 @@ function initIntroSequence() {
     });
 
     backBtn.disabled = current === 0;
-    nextBtn.textContent = current === introSteps.length - 1 ? "Begin" : "Next";
+    nextBtn.textContent = current === introSteps.length - 1 ? "Descend" : "Next";
   }
 
   function goTo(idx, opts = {}) {
