@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Neuro Path • VESTRIPPN3.0</title>
-    <link rel="stylesheet" href="./styles.css?v=20260628-neuropath" />
+    <link rel="stylesheet" href="./styles.css?v=20260629-clear" />
   </head>
   <body>
     <div class="deep-atmosphere" aria-hidden="true">
@@ -32,17 +32,17 @@
     >
       <div class="intro-overlay-grid" aria-hidden="true"></div>
 
-      <button class="intro-skip" id="introSkip" type="button">Skip the drift</button>
+      <button class="intro-skip" id="introSkip" type="button">Skip intro</button>
 
       <div class="intro-stage">
         <div class="intro-brand">
-          <p class="eyebrow intro-eyebrow">Deep-Brain Field Lab</p>
+          <p class="eyebrow intro-eyebrow">Neuro Localization Lab</p>
           <h1 class="intro-headline" id="introHeadline">
-            <span>Trace</span>
-            <span>the living</span>
-            <span>tracts</span>
+            <span>Pathway</span>
+            <span>&amp; Lesion</span>
+            <span>Simulator</span>
           </h1>
-          <p class="intro-tagline">Follow the glow. Interrupt it. Read the dark.</p>
+          <p class="intro-tagline">Trace flow. Interrupt it. Localize the sign.</p>
         </div>
 
         <div class="intro-scene" aria-hidden="true">
@@ -128,19 +128,19 @@
         <div class="intro-map" aria-label="Simulator workflow">
           <div>
             <strong>01</strong>
-            <span>Pick a tract to light up</span>
+            <span>Choose a pathway</span>
           </div>
           <div>
             <strong>02</strong>
-            <span>Compare the glow to the dark</span>
+            <span>Compare normal and lesion states</span>
           </div>
           <div>
             <strong>03</strong>
-            <span>Slice into the deep</span>
+            <span>Read cross-section evidence</span>
           </div>
           <div>
             <strong>04</strong>
-            <span>Name the field mark</span>
+            <span>Classify the lesion</span>
           </div>
         </div>
 
@@ -172,15 +172,15 @@
     </div>
 
     <header class="app-header" id="appHeader">
-      <a class="brand" href="#" aria-label="VESTRIPPN 3.0">
+      <a class="brand" href="#" aria-label="VESTRIPPN — Neuro Localization Lab">
         <span class="brand-tile" aria-hidden="true">V</span>
         <span class="brand-word">VESTRIPPN<span class="brand-version">3.0</span></span>
       </a>
 
       <nav class="app-nav" aria-label="Workspace regions">
-        <button type="button" class="app-nav-tab" data-target="pathway">Tracts</button>
-        <button type="button" class="app-nav-tab is-active" data-target="cockpit" aria-current="true">The Deep</button>
-        <button type="button" class="app-nav-tab" data-target="clinical">Signs</button>
+        <button type="button" class="app-nav-tab" data-target="pathway">Pathway</button>
+        <button type="button" class="app-nav-tab is-active" data-target="cockpit" aria-current="true">Cockpit</button>
+        <button type="button" class="app-nav-tab" data-target="clinical">Clinical</button>
       </nav>
 
       <button class="header-mode" id="themeToggle" type="button" aria-label="Theme mode: Auto. Click to change.">
@@ -197,22 +197,22 @@
         <div class="panel-content" id="leftPanelContent" aria-hidden="true">
         <div class="intro-block">
           <div class="intro-heading">
-            <p class="eyebrow">Deep-Brain Field Lab</p>
+            <p class="eyebrow">Neuro Localization Lab</p>
           </div>
-          <h1>Trace the living tracts</h1>
+          <h1>Pathway & Lesion Simulator</h1>
           <p class="intro-copy">
-            Every tract glows from origin to target. Drop a lesion, watch the light go dark downstream, and read where the deep went quiet.
+            Trace tract flow, interrupt it with a lesion, and connect the visual break to the clinical pattern.
           </p>
-          <button class="intro-sequence" id="introReplay" type="button" aria-label="Replay the descent">
-            <span>Trace</span>
+          <button class="intro-sequence" id="introReplay" type="button" aria-label="Replay intro sequence">
+            <span>Flow</span>
             <span>Interrupt</span>
             <span>Localize</span>
           </button>
         </div>
 
-        <section class="control-group classifier-group collapsible-section" id="classificationSection" data-collapsible-section data-section-label="Field Marks">
+        <section class="control-group classifier-group collapsible-section" id="classificationSection" data-collapsible-section data-section-label="Classification">
           <div class="section-heading">
-            <span>Field Marks</span>
+            <span>Classification</span>
             <span class="section-heading-actions">
               <span id="classifierCount">00</span>
               <button class="section-toggle" type="button" aria-label="Collapse Classification" aria-controls="classificationSection" aria-expanded="true">
@@ -224,9 +224,9 @@
           <div class="classifier-list" id="classifierList"></div>
         </section>
 
-        <section class="control-group collapsible-section" id="pathwaySection" data-collapsible-section data-section-label="Tracts">
+        <section class="control-group collapsible-section" id="pathwaySection" data-collapsible-section data-section-label="Pathway">
           <div class="section-heading">
-            <span>Tracts</span>
+            <span>Pathway</span>
             <span class="section-heading-actions">
               <span id="pathwayCount">04</span>
               <button class="section-toggle" type="button" aria-label="Collapse Pathway" aria-controls="pathwaySection" aria-expanded="true">
@@ -237,9 +237,9 @@
           <div class="pathway-list" id="pathwayList"></div>
         </section>
 
-        <section class="control-group collapsible-section" id="lesionSiteSection" data-collapsible-section data-section-label="Where It Goes Dark">
+        <section class="control-group collapsible-section" id="lesionSiteSection" data-collapsible-section data-section-label="Lesion Site">
           <div class="section-heading">
-            <span>Where It Goes Dark</span>
+            <span>Lesion Site</span>
             <span class="section-heading-actions">
               <span id="lesionCount">00</span>
               <button class="section-toggle" type="button" aria-label="Collapse Lesion Site" aria-controls="lesionSiteSection" aria-expanded="true">
@@ -250,9 +250,9 @@
           <div class="lesion-list" id="lesionList"></div>
         </section>
 
-        <section class="status-strip collapsible-section" id="currentStateSection" aria-label="Current simulation state" data-collapsible-section data-section-label="Signal">
+        <section class="status-strip collapsible-section" id="currentStateSection" aria-label="Current simulation state" data-collapsible-section data-section-label="Current State">
           <div class="section-heading">
-            <span>Signal</span>
+            <span>Current State</span>
             <button class="section-toggle" type="button" aria-label="Collapse Current State" aria-controls="currentStateSection" aria-expanded="true">
               <span aria-hidden="true"></span>
             </button>
@@ -266,7 +266,7 @@
             <strong id="lateralityState">Contralateral</strong>
           </div>
           <div>
-            <span class="status-label">Depth</span>
+            <span class="status-label">Complexity</span>
             <strong id="complexityState">Foundational</strong>
           </div>
         </section>
@@ -276,14 +276,14 @@
       <section class="workspace" aria-label="Neural pathway visualization">
         <header class="topbar">
           <div>
-            <p class="eyebrow">The Glowfield</p>
+            <p class="eyebrow">Localization Cockpit</p>
             <h2 id="activeTitle">Corticospinal Tract</h2>
           </div>
           <div class="topbar-actions">
             <div class="legend" aria-label="Visualization legend">
-              <span><i class="legend-dot active-dot"></i>Glowing</span>
+              <span><i class="legend-dot active-dot"></i>Active flow</span>
               <span><i class="legend-dot lesion-dot"></i>Lesion</span>
-              <span><i class="legend-dot damaged-dot"></i>Gone dark</span>
+              <span><i class="legend-dot damaged-dot"></i>Downstream affected</span>
             </div>
             <button
               class="topbar-intro"
@@ -294,7 +294,7 @@
               aria-controls="introOverlay"
             >
               <span class="topbar-intro-icon" aria-hidden="true">i</span>
-              <span class="topbar-intro-text">Replay</span>
+              <span class="topbar-intro-text">Intro</span>
             </button>
             <button
               class="topbar-help"
@@ -305,7 +305,7 @@
               aria-controls="helpOverlay"
             >
               <span class="topbar-help-icon" aria-hidden="true">?</span>
-              <span class="topbar-help-text">Field guide</span>
+              <span class="topbar-help-text">How to use</span>
             </button>
           </div>
         </header>
@@ -436,7 +436,7 @@
         <section class="cross-section-panel" aria-label="Neuroanatomy cross-section viewer">
           <div class="cross-section-header">
             <div>
-              <p class="eyebrow">Deep Slice</p>
+              <p class="eyebrow">Cross Section</p>
               <h3 id="crossSectionTitle">Brainstem axial slice</h3>
               <p id="crossSectionSubtitle">Cranial nerve nuclei, long tracts, and crossed-sign localization.</p>
             </div>
@@ -451,7 +451,7 @@
               aria-labelledby="crossSectionTitle crossSectionSubtitle"
             ></svg>
             <div class="cross-section-notes">
-              <span class="metric-label">Reading</span>
+              <span class="metric-label">Localization Rule</span>
               <strong id="crossSectionRule">Compact deep lesions create dense contralateral deficits.</strong>
               <ul id="crossSectionStructures"></ul>
             </div>
@@ -461,10 +461,10 @@
 
       <aside class="panel panel-right" aria-label="Clinical consequence panel">
         <div class="panel-content" id="rightPanelContent" aria-hidden="true">
-        <section class="clinical-card primary-finding collapsible-section" id="clinicalOutputSection" data-collapsible-section data-section-label="The Reading">
+        <section class="clinical-card primary-finding collapsible-section" id="clinicalOutputSection" data-collapsible-section data-section-label="Clinical Output">
           <div class="section-card-heading">
-            <p class="eyebrow">The Reading</p>
-            <button class="section-toggle" type="button" aria-label="Collapse The Reading" aria-controls="clinicalOutputSection" aria-expanded="true">
+            <p class="eyebrow">Clinical Output</p>
+            <button class="section-toggle" type="button" aria-label="Collapse Clinical Output" aria-controls="clinicalOutputSection" aria-expanded="true">
               <span aria-hidden="true"></span>
             </button>
           </div>
@@ -474,9 +474,9 @@
           </p>
         </section>
 
-        <section class="clinical-grid collapsible-section" id="deficitSummarySection" aria-label="Deficit summary" data-collapsible-section data-section-label="Where the Light Fails">
+        <section class="clinical-grid collapsible-section" id="deficitSummarySection" aria-label="Deficit summary" data-collapsible-section data-section-label="Deficit Summary">
           <div class="section-heading">
-            <span>Where the Light Fails</span>
+            <span>Deficit Summary</span>
             <button class="section-toggle" type="button" aria-label="Collapse Deficit Summary" aria-controls="deficitSummarySection" aria-expanded="true">
               <span aria-hidden="true"></span>
             </button>
@@ -509,7 +509,7 @@
 
         <section class="reasoning-panel collapsible-section" id="reasoningSection" data-collapsible-section data-section-label="Reasoning">
           <div class="section-heading">
-            <span>Why It Goes Dark</span>
+            <span>Why This Happens</span>
             <span class="section-heading-actions">
               <span id="reasoningCode">CST-01</span>
               <button class="section-toggle" type="button" aria-label="Collapse Reasoning" aria-controls="reasoningSection" aria-expanded="true">
@@ -520,9 +520,9 @@
           <ol id="reasoningList" class="reasoning-list"></ol>
         </section>
 
-        <section class="localization-clue collapsible-section" id="localizationClueSection" data-collapsible-section data-section-label="Glow Clue">
+        <section class="localization-clue collapsible-section" id="localizationClueSection" data-collapsible-section data-section-label="Localization Clue">
           <div class="section-card-heading">
-            <span>Glow Clue</span>
+            <span>Localization clue</span>
             <button class="section-toggle" type="button" aria-label="Collapse Localization Clue" aria-controls="localizationClueSection" aria-expanded="true">
               <span aria-hidden="true"></span>
             </button>
@@ -530,9 +530,9 @@
           <p id="localizationClue">Face, arm, and leg together points to a compact supratentorial motor pathway.</p>
         </section>
 
-        <section class="classification-panel collapsible-section" id="lesionClassificationSection" data-collapsible-section data-section-label="Field Mark">
+        <section class="classification-panel collapsible-section" id="lesionClassificationSection" data-collapsible-section data-section-label="Lesion Classification">
           <div class="section-heading">
-            <span>Field Mark</span>
+            <span>Lesion Classification</span>
             <span class="section-heading-actions">
               <span id="classificationCode">BA-04</span>
               <button class="section-toggle" type="button" aria-label="Collapse Lesion Classification" aria-controls="lesionClassificationSection" aria-expanded="true">
@@ -579,7 +579,7 @@
         <header class="help-header">
           <div>
             <p class="eyebrow">Guide</p>
-            <h2 id="helpTitle">Field guide to the deep</h2>
+            <h2 id="helpTitle">How to use the simulator</h2>
           </div>
           <button class="help-close" id="helpClose" type="button" aria-label="Close guide">
             <span aria-hidden="true">×</span>
@@ -592,150 +592,150 @@
               <span class="help-nav-index">01</span>Overview
             </button>
             <button class="help-nav-item" type="button" role="tab" data-section="pathway" aria-selected="false">
-              <span class="help-nav-index">02</span>Light a tract
+              <span class="help-nav-index">02</span>Pick a pathway
             </button>
             <button class="help-nav-item" type="button" role="tab" data-section="lesion" aria-selected="false">
-              <span class="help-nav-index">03</span>Drop a lesion
+              <span class="help-nav-index">03</span>Place a lesion
             </button>
             <button class="help-nav-item" type="button" role="tab" data-section="canvas" aria-selected="false">
-              <span class="help-nav-index">04</span>Read the glowfield
+              <span class="help-nav-index">04</span>Read the canvas
             </button>
             <button class="help-nav-item" type="button" role="tab" data-section="clinical" aria-selected="false">
-              <span class="help-nav-index">05</span>The reading
+              <span class="help-nav-index">05</span>Clinical output
             </button>
             <button class="help-nav-item" type="button" role="tab" data-section="classification" aria-selected="false">
-              <span class="help-nav-index">06</span>Field marks
+              <span class="help-nav-index">06</span>Classification
             </button>
             <button class="help-nav-item" type="button" role="tab" data-section="cross" aria-selected="false">
-              <span class="help-nav-index">07</span>Deep slice
+              <span class="help-nav-index">07</span>Cross-section
             </button>
             <button class="help-nav-item" type="button" role="tab" data-section="shortcuts" aria-selected="false">
-              <span class="help-nav-index">08</span>Tips & currents
+              <span class="help-nav-index">08</span>Tips & shortcuts
             </button>
           </nav>
 
           <div class="help-content" id="helpContent" tabindex="-1">
             <section class="help-section is-active" data-section="overview" role="tabpanel" aria-label="Overview">
               <p class="eyebrow help-section-eyebrow">Overview</p>
-              <h3>Follow the glow. Interrupt it. Read the dark.</h3>
+              <h3>Trace flow. Interrupt it. Localize the sign.</h3>
               <p>
-                This lab turns the classic neurology reasoning chain into a living thing you can dim. Every dive follows the same three beats:
+                This simulator turns the classic neurology reasoning chain into something you can poke. Every session follows the same three beats:
               </p>
               <ol class="help-steps">
-                <li><strong>Trace</strong> — start from an all-aglow tract so the living route is obvious.</li>
-                <li><strong>Interrupt</strong> — drop a lesion somewhere along the tract and watch which fibers go dark.</li>
-                <li><strong>Localize</strong> — read the break against decussation, somatotopy, and the sign that fades out.</li>
+                <li><strong>Flow</strong> — start from an intact tract so the baseline signal is obvious.</li>
+                <li><strong>Interrupt</strong> — drop a lesion somewhere along the path and watch which fibers fall silent.</li>
+                <li><strong>Localize</strong> — read the visual break against decussation, somatotopy, and the clinical pattern that drops out.</li>
               </ol>
               <p class="help-callout">
-                The glowfield is the source of truth. The side panels just narrate what the light is doing.
+                The canvas is the source of truth. The side panels just narrate what the lines are doing.
               </p>
             </section>
 
-            <section class="help-section" data-section="pathway" role="tabpanel" aria-label="Light a tract" hidden>
+            <section class="help-section" data-section="pathway" role="tabpanel" aria-label="Pick a pathway" hidden>
               <p class="eyebrow help-section-eyebrow">Step 02 · Left panel</p>
-              <h3>Light a tract</h3>
+              <h3>Pick a pathway</h3>
               <p>
-                The <strong>Tracts</strong> list in the left panel holds the major pathways the lab models — corticospinal, dorsal columns, spinothalamic, optic, and friends.
+                The <strong>Pathway</strong> list in the left panel holds the major tracts the simulator models — corticospinal, dorsal columns, spinothalamic, optic, and friends.
               </p>
               <ul class="help-list">
-                <li>Tap any tract to light it up in the glowfield.</li>
-                <li>The chosen tract glows; its origin and target flare on.</li>
-                <li>The footer updates with the tract's origin, decussation, signal rule, and pattern.</li>
-                <li>The right panel resets to the all-aglow baseline — read it before you dim anything.</li>
+                <li>Click any pathway to load it onto the canvas.</li>
+                <li>The selected tract glows; its origin and target light up.</li>
+                <li>The cockpit footer updates with the tract's origin, decussation, signal rule, and pattern.</li>
+                <li>The right panel resets to the intact baseline — useful before you place a lesion.</li>
               </ul>
               <p class="help-callout">
-                Always read the aglow baseline first. It tells you what the dark is about to take away.
+                Always read the intact baseline first. It tells you what the lesion is about to take away.
               </p>
             </section>
 
-            <section class="help-section" data-section="lesion" role="tabpanel" aria-label="Drop a lesion" hidden>
+            <section class="help-section" data-section="lesion" role="tabpanel" aria-label="Place a lesion" hidden>
               <p class="eyebrow help-section-eyebrow">Step 03 · Left panel</p>
-              <h3>Drop a lesion</h3>
+              <h3>Place a lesion</h3>
               <p>
-                The <strong>Where It Goes Dark</strong> list lets you drop a focal lesion at any depth of the lit tract.
+                The <strong>Lesion Site</strong> list lets you drop a focal lesion at any level of the active tract.
               </p>
               <ul class="help-list">
-                <li>Choose a spot — cortex, internal capsule, brainstem level, cord segment, peripheral nerve.</li>
-                <li>The glowfield marks the lesion with a hot core and a halo.</li>
-                <li>Fibers downstream of the break fade to a dashed, gone-dark stroke.</li>
-                <li>The right panel rewrites the reading to reflect the deficit.</li>
+                <li>Choose a site — cortex, internal capsule, brainstem level, cord segment, peripheral nerve.</li>
+                <li>The canvas marks the lesion with a red core and an aura halo.</li>
+                <li>Fibers downstream of the break switch to a dashed muted stroke.</li>
+                <li>The right panel rewrites the clinical output to reflect the deficit.</li>
               </ul>
               <p>
-                Tap the same lesion again — or light a different tract — to clear it and return to all-aglow.
+                Click the same lesion again — or pick a different pathway — to clear it and return to baseline.
               </p>
             </section>
 
-            <section class="help-section" data-section="canvas" role="tabpanel" aria-label="Read the glowfield" hidden>
-              <p class="eyebrow help-section-eyebrow">Step 04 · The Deep</p>
-              <h3>Read the glowfield</h3>
-              <p>The glowfield speaks a small vocabulary of light:</p>
+            <section class="help-section" data-section="canvas" role="tabpanel" aria-label="Read the canvas" hidden>
+              <p class="eyebrow help-section-eyebrow">Step 04 · Workspace</p>
+              <h3>Read the canvas</h3>
+              <p>The schematic uses a small color vocabulary:</p>
               <ul class="help-list help-list-legend">
-                <li><i class="legend-dot active-dot"></i><span><strong>Glowing</strong> — fibers still carrying the signal.</span></li>
-                <li><i class="legend-dot lesion-dot"></i><span><strong>Lesion</strong> — where the tract is broken.</span></li>
-                <li><i class="legend-dot damaged-dot"></i><span><strong>Gone dark</strong> — fibers past the break, now unlit.</span></li>
+                <li><i class="legend-dot active-dot"></i><span><strong>Active flow</strong> — fibers carrying signal intact.</span></li>
+                <li><i class="legend-dot lesion-dot"></i><span><strong>Lesion</strong> — the interruption point.</span></li>
+                <li><i class="legend-dot damaged-dot"></i><span><strong>Downstream affected</strong> — fibers past the break, now silent.</span></li>
               </ul>
               <p>
-                The dashed midline runs vertically. Anything crossing it is decussating. The brain, brainstem, cord, eyes, and ears are your anchors in the dark — match the tract's course against them when you reason about laterality.
+                The dashed midline runs vertically. Anything crossing it is decussating. The brain, brainstem, cord, eyes, and ears are anatomical anchors — match the tract's course against them when you reason about laterality.
               </p>
             </section>
 
-            <section class="help-section" data-section="clinical" role="tabpanel" aria-label="The reading" hidden>
+            <section class="help-section" data-section="clinical" role="tabpanel" aria-label="Clinical output" hidden>
               <p class="eyebrow help-section-eyebrow">Step 05 · Right panel</p>
-              <h3>Read the signs</h3>
-              <p>The right panel narrates the glowfield in clinical language.</p>
+              <h3>Interpret the clinical output</h3>
+              <p>The right panel narrates the canvas in clinical language.</p>
               <ul class="help-list">
-                <li><strong>The reading</strong> — the headline finding (e.g. "Left UMN weakness").</li>
-                <li><strong>Where the light fails</strong> — motor, sensory, reflexes, laterality, network, and the classic pitfall.</li>
-                <li><strong>Why it goes dark</strong> — the reasoning chain from anatomy to sign.</li>
-                <li><strong>Glow clue</strong> — the cardinal feature that nails the level.</li>
+                <li><strong>Clinical output</strong> — the headline finding (e.g. "Left UMN weakness").</li>
+                <li><strong>Deficit summary</strong> — motor, sensory, reflexes, laterality, network, and the classic pitfall to avoid.</li>
+                <li><strong>Why this happens</strong> — the reasoning chain from anatomy to sign.</li>
+                <li><strong>Localization clue</strong> — the cardinal feature that nails the level.</li>
               </ul>
               <p class="help-callout">
-                If a deficit feels wrong, re-read the glowfield. The text follows the light, not the other way round.
+                If a deficit feels wrong, re-read the canvas. The text follows the lines, not the other way round.
               </p>
             </section>
 
-            <section class="help-section" data-section="classification" role="tabpanel" aria-label="Field marks" hidden>
+            <section class="help-section" data-section="classification" role="tabpanel" aria-label="Classification" hidden>
               <p class="eyebrow help-section-eyebrow">Step 06 · Left panel</p>
-              <h3>Name the field marks</h3>
+              <h3>Use the classification systems</h3>
               <p>
-                The <strong>Field Marks</strong> tabs at the top of the left panel let you name the lesion against a classical system — Brodmann areas, brainstem syndromes, spinal levels, subcortical territories, and more.
+                The <strong>Classification</strong> tabs at the top of the left panel let you label the lesion against a classical anatomical system — Brodmann areas, brainstem syndromes, spinal levels, subcortical territories, and more.
               </p>
               <ul class="help-list">
                 <li>Switch tabs to change the lens.</li>
-                <li>Pick an entry to apply that field mark to the current glowfield.</li>
-                <li>The right panel shows the field-mark card with region, signature, localization, pitfall, and reasoning.</li>
+                <li>Pick an entry to apply that classification to the current canvas state.</li>
+                <li>The right panel shows the classification card with region, signature, localization, pitfall, and reasoning steps.</li>
               </ul>
               <p>This is the layer that mirrors how textbooks and boards talk about lesions.</p>
             </section>
 
-            <section class="help-section" data-section="cross" role="tabpanel" aria-label="Deep slice" hidden>
-              <p class="eyebrow help-section-eyebrow">Step 07 · Below the glowfield</p>
-              <h3>Cut a deep slice</h3>
+            <section class="help-section" data-section="cross" role="tabpanel" aria-label="Cross-section" hidden>
+              <p class="eyebrow help-section-eyebrow">Step 07 · Below the canvas</p>
+              <h3>Use the cross-section viewer</h3>
               <p>
-                The <strong>Deep Slice</strong> panel sits below the glowfield. It slices the brainstem or spinal cord at useful levels and shows where the lit tract sits inside that slice.
+                The <strong>Cross Section</strong> panel sits below the cockpit. It slices the brainstem or spinal cord at clinically useful levels and shows where the active tract sits inside that slice.
               </p>
               <ul class="help-list">
                 <li>Switch the tab to change levels (e.g. brainstem vs. cord).</li>
-                <li>The highlighted region maps the tract's position at that depth.</li>
-                <li>The reading restates the principle in one sentence.</li>
-                <li>Structures listed below are the neighbors most often caught in the dark.</li>
+                <li>The highlighted region maps the tract's position at that level.</li>
+                <li>The localization rule restates the principle in one sentence.</li>
+                <li>Structures listed below are the neighbors most often co-affected.</li>
               </ul>
             </section>
 
-            <section class="help-section" data-section="shortcuts" role="tabpanel" aria-label="Tips and currents" hidden>
+            <section class="help-section" data-section="shortcuts" role="tabpanel" aria-label="Tips and shortcuts" hidden>
               <p class="eyebrow help-section-eyebrow">Step 08</p>
-              <h3>Tips & currents</h3>
+              <h3>Tips & shortcuts</h3>
               <ul class="help-list help-shortcuts">
                 <li><kbd>Esc</kbd><span>Close any overlay.</span></li>
-                <li><kbd>←</kbd> <kbd>→</kbd><span>Drift through guide sections.</span></li>
+                <li><kbd>←</kbd> <kbd>→</kbd><span>Step through guide sections.</span></li>
                 <li><kbd>?</kbd><span>Open this guide from anywhere.</span></li>
               </ul>
-              <h4>Currents to ride</h4>
+              <h4>Workflow tips</h4>
               <ul class="help-list">
-                <li>Tap <strong>Tracts</strong> or <strong>Signs</strong> in the top bar to surface or hide the side panels; <strong>The Deep</strong> re-centers the glowfield.</li>
-                <li>Set <strong>Mode</strong> to Shallows or Deep in the top bar if the contrast is straining.</li>
-                <li>Tap <strong>Replay</strong> in the top bar, or the Trace / Interrupt / Localize chips, to run the descent again.</li>
-                <li>The footer is the fastest summary — read it before diving into the right panel.</li>
+                <li>Collapse the left or right panel (top-corner arrow) to give the canvas more room.</li>
+                <li>Toggle <strong>Night/Day</strong> in the left panel if the contrast is straining.</li>
+                <li>Click <strong>Intro</strong> in the top bar, or the Flow / Interrupt / Localize chips in the left panel, to replay the intro.</li>
+                <li>The cockpit footer is the fastest summary — read it before diving into the right panel.</li>
               </ul>
             </section>
           </div>
@@ -753,6 +753,6 @@
       </div>
     </div>
 
-    <script src="./app.js?v=20260628-lumen"></script>
+    <script src="./app.js?v=20260629-clear"></script>
   </body>
 </html>
