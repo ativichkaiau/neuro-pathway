@@ -213,30 +213,11 @@ button {
   color: var(--text);
 }
 
-.brand-tile {
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  flex: 0 0 auto;
-  background: transparent;
-}
-
 .brand-mark {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.brand-mark-face {
-  fill: #46e0b8;
-  stroke: #1c5f6d;
-  stroke-width: 5;
-  stroke-linejoin: round;
-}
-
-.brand-mark-side {
-  fill: #1f8a80;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  object-fit: contain;
 }
 
 .brand-word {
