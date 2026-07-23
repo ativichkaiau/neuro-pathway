@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Neuro Path">
+  <rect width="64" height="64" rx="15" fill="#071820"/>
+  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="14.25" fill="none" stroke="#123a44" stroke-width="1.5"/>
+  <g stroke="#45e0d6" stroke-width="3.2" stroke-linecap="round" fill="none" opacity="0.95">
+    <path d="M32 32 L15 17"/>
+    <path d="M15 17 L7 13"/>
+    <path d="M15 17 L14 7"/>
+    <path d="M32 32 L50 15"/>
+    <path d="M50 15 L58 12"/>
+    <path d="M50 15 L53 6"/>
+    <path d="M32 32 L14 49"/>
+    <path d="M14 49 L7 54"/>
+    <path d="M32 32 L50 51"/>
+  </g>
+  <circle cx="7" cy="13" r="2.6" fill="#9a7cff"/>
+  <circle cx="58" cy="12" r="2.6" fill="#ffce6e"/>
+  <circle cx="53" cy="6" r="2.2" fill="#45e0d6"/>
+  <circle cx="7" cy="54" r="2.6" fill="#45e0d6"/>
+  <circle cx="50" cy="51" r="3" fill="#9a7cff"/>
+  <circle cx="14" cy="7" r="2.2" fill="#45e0d6"/>
+  <circle cx="32" cy="32" r="9" fill="#45e0d6"/>
+  <circle cx="32" cy="32" r="9" fill="none" stroke="#071820" stroke-width="2"/>
+  <circle cx="29" cy="29" r="2.4" fill="#c8fff6"/>
+</svg>
